@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainEngine", "RainEngine\RainEngine.csproj", "{4E2B6D12-64B2-48D4-83A8-5D4CBFCF49BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E2B6D12-64B2-48D4-83A8-5D4CBFCF49BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E2B6D12-64B2-48D4-83A8-5D4CBFCF49BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E2B6D12-64B2-48D4-83A8-5D4CBFCF49BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E2B6D12-64B2-48D4-83A8-5D4CBFCF49BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7F5BF660-2F09-46A2-BB5F-49EDDADE7751}
+	EndGlobalSection
+EndGlobal
