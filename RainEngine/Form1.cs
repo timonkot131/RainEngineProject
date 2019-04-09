@@ -34,6 +34,7 @@ namespace RainEngine
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             graph.DrawEllipse(ColourPen, First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y);
+            SceneObject obj = new SceneObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y,SceneObject.Shapes.Circle);
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)

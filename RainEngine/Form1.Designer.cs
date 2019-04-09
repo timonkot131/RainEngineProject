@@ -79,7 +79,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.listBox1);
             this.splitContainer1.Size = new System.Drawing.Size(909, 541);
-            this.splitContainer1.SplitterDistance = 878;
+            this.splitContainer1.SplitterDistance = 880;
             this.splitContainer1.TabIndex = 2;
             // 
             // toolStrip1
@@ -105,12 +105,12 @@
             // 
             // toolStripButton2
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(24, 24);
-            this.toolStripButton2.Text = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(46, 24);
+            this.toolStripButton2.Text = "Стоп";
             // 
             // Form1
             // 
