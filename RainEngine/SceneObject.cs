@@ -30,37 +30,37 @@ namespace RainEngine
             this.scale_y = scale_y;
         }
 
-        Shapes Shape
+        public Shapes Shape
         {
             get { return shape; }
             set { shape = value; }
         }
 
-        int X
+        public int X
         {
             get { return x; }
             set { x = value; }
         }
 
-        int Y
+        public int Y
         {
             get { return y; }
             set { y = value; }
         }
 
-        int Scale_x
+        public int Scale_x
         {
             get { return scale_x; }
             set { scale_x = value; }
         }
 
-        int Scale_y
+        public int Scale_y
         {
             get { return scale_y; }
             set { scale_y = value; }
         }
 
-        string Name
+        public string Name
         {
             get { return name; }
             set { name = value; }
