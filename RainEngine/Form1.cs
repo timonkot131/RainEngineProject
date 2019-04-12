@@ -18,12 +18,37 @@ namespace RainEngine
         Point Current_pos;
         Pen ColourPen = new Pen(Color.Black, 3);
         List<SceneObject> sceneobjs = new List<SceneObject>();
+        string[] scenabnames = new string[] { "circle", "square" };
+        Bitmap[] scenabimgs = new Bitmap[] {new Bitmap("imgs/circle.png"),new Bitmap("imgs/square.png") };
 
         public Form1()
         {
             InitializeComponent();
             graph = pictureBox1.CreateGraphics();
+            LoadListViewData();
         }
+
+        private void LoadListViewData()
+        {
+            listView1.Items.Clear();
+            ImageList imageList = new ImageList();
+            imageList.ImageSize = new Size(50, 50);
+            Bitmap emptyImage = new Bitmap(50, 50);
+            using (Graphics gr = Graphics.FromImage(emptyImage))
+            {
+                gr.Clear(Color.White);
+            }
+            imageList.Images.Add(scenabimgs[0]);
+            imageList.Images.Add(scenabimgs[1]);
+            listView1.LargeImageList = imageList;
+            string[] ObjectNames = scenabnames;
+            for (int i = 0; i < ObjectNames.Length; i++)
+            {
+                ListViewItem listViewItem = new ListViewItem(ObjectNames[i]);
+                listViewItem.ImageIndex = i;
+                listView1.Items.Add(listViewItem);
+            }
+        } 
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -52,6 +77,11 @@ namespace RainEngine
                 SceneManager.UpdateAll(sceneobjs,graph,ColourPen);
             }
            
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
