@@ -19,7 +19,17 @@ namespace RainEngine
                         graph.DrawEllipse(pen, obj.X, obj.Y, obj.Scale_x, obj.Scale_y);
                         break;
                     case SceneObject.Shapes.Square:
-                        graph.DrawRectangle(pen, obj.X, obj.Y, obj.Scale_x, obj.Scale_y);
+                        graph.DrawPolygon(pen, new Point[]
+                        {
+                            new Point(obj.X,obj.Y),
+                            new Point(obj.X+obj.Scale_x,obj.Y),
+                            new Point(obj.X+obj.Scale_x,obj.Y+obj.Scale_y),
+                            new Point(obj.X,obj.Y+obj.Scale_y)
+
+                        });
+                        break;
+                    case SceneObject.Shapes.StickMan:
+                        FigureDrawing.MakeStickMan(graph, obj.X, obj.Y, obj.Scale_x, obj.Scale_y,pen);
                         break;
                 }
             }

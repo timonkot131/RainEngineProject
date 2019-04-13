@@ -18,7 +18,12 @@ namespace RainEngine
         public enum Shapes
         {
             Circle,
-            Square
+            Square,
+            StickMan,
+            Arrow_Up,
+            Arrow_Down,
+            Arrow_Left,
+            Arrow_Right,
         }
 
         public SceneObject(int x,int y,int scale_x,int scale_y,Shapes shape)
