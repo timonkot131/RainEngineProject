@@ -31,6 +31,12 @@ namespace RainEngine
                     case SceneObject.Shapes.StickMan:
                         FigureDrawing.MakeStickMan(graph, obj.X, obj.Y, obj.Scale_x, obj.Scale_y,pen);
                         break;
+                    case SceneObject.Shapes.Arrow_Vertical:
+                        FigureDrawing.MakeArrowVertical(graph, obj.X, obj.Y, obj.Scale_x, obj.Scale_y, pen);
+                        break;
+                    case SceneObject.Shapes.Arrow_Horizontal:
+                        FigureDrawing.MakeArrowHorizontal(graph, obj.X, obj.Y, obj.Scale_x, obj.Scale_y, pen);
+                        break;
                 }
             }
 

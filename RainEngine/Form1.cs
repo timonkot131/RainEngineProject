@@ -22,10 +22,8 @@ namespace RainEngine
             "Circle",
             "Square",
             "Stickman",
-            "Arrow Up",
-            "Arrow Down",
-            "Arrow Left",
-            "Arrow Right"
+            "Arrow Vertical",
+            "Arrow Horizontal",
         };
         Bitmap[] scenabimgs = new Bitmap[]
         {
@@ -33,9 +31,7 @@ namespace RainEngine
             new Bitmap("imgs/Square.png"),
             new Bitmap("imgs/StickMan.png"),
             new Bitmap("imgs/Arrow_Up.png"),
-            new Bitmap("imgs/Arrow_Down.png"),
-            new Bitmap("imgs/Arrow_Left.png"),
-            new Bitmap("imgs/Arrow_Right.png")
+            new Bitmap("imgs/Arrow_Right.png"),
         };
 
         public Form1()
@@ -100,6 +96,12 @@ namespace RainEngine
                     case 2:
                         obj = new SceneObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, SceneObject.Shapes.StickMan);
                         break;
+                    case 3:
+                        obj = new SceneObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, SceneObject.Shapes.Arrow_Vertical);
+                        break;
+                    case 4:
+                        obj= new SceneObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, SceneObject.Shapes.Arrow_Horizontal);
+                        break;
                 }
                 sceneobjs.Add(obj);
             }
@@ -141,7 +143,13 @@ namespace RainEngine
                         });
                         break;
                     case 2:
-                            FigureDrawing.MakeStickMan(graph, First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, ColourPen);
+                        FigureDrawing.MakeStickMan(graph, First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, ColourPen);
+                        break;
+                    case 3:
+                        FigureDrawing.MakeArrowVertical(graph, First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, ColourPen);
+                        break;
+                    case 4:
+                        FigureDrawing.MakeArrowHorizontal(graph, First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, ColourPen);
                         break;
                 }
                 SceneManager.UpdateAll(sceneobjs,graph,ColourPen);

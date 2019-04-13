@@ -20,10 +20,8 @@ namespace RainEngine
             Circle,
             Square,
             StickMan,
-            Arrow_Up,
-            Arrow_Down,
-            Arrow_Left,
-            Arrow_Right,
+            Arrow_Vertical,
+            Arrow_Horizontal
         }
 
         public SceneObject(int x,int y,int scale_x,int scale_y,Shapes shape)
