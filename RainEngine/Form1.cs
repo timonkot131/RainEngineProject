@@ -81,6 +81,18 @@ namespace RainEngine
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
+            AddObject();
+            UpdateListbox();
+        }
+        private void UpdateListbox()
+        {
+           foreach(SceneObject scenobj in sceneobjs)
+            {
+             //   listBox1.Items.Add(scenobj.Name);
+            }
+        }
+        private void AddObject()
+        {
             SceneObject obj;
             if (listView1.SelectedIndices.Count != 0)
             {
@@ -100,14 +112,13 @@ namespace RainEngine
                         obj = new SceneObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, SceneObject.Shapes.Arrow_Vertical);
                         break;
                     case 4:
-                        obj= new SceneObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, SceneObject.Shapes.Arrow_Horizontal);
+                        obj = new SceneObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, SceneObject.Shapes.Arrow_Horizontal);
                         break;
                 }
                 sceneobjs.Add(obj);
             }
             SceneManager.UpdateAll(sceneobjs, graph, ColourPen);
         }
-
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -170,6 +181,11 @@ namespace RainEngine
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
             ClearAll();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            
         }
     }
 }

@@ -41,5 +41,9 @@ namespace RainEngine
             }
 
         }
+        static public void AddSceneObject()
+        {
+           
+        }
     }
 }
