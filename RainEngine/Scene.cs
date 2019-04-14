@@ -7,11 +7,27 @@ using System.Threading.Tasks;
 
 namespace RainEngine
 {
-    static class SceneManager
+    class Scene
     {
-        static public void UpdateAll(List<SceneObject> sceneobj,Graphics graph,Pen pen)
+        private List<SceneObject> sceneObjects;
+
+        public Scene()
         {
-            foreach (SceneObject obj in sceneobj)
+            sceneObjects = new List<SceneObject>();
+        }
+
+        public void AddNewObject(SceneObject obj)
+        {
+
+            sceneObjects.Add(obj);
+        }
+        public void Clear()
+        {
+            sceneObjects.Clear();
+        }
+        public void UpdateGraphicsFromScene(Scene scene, Graphics graph, Pen pen)
+        {
+            foreach (SceneObject obj in sceneObjects)
             {
                 switch (obj.Shape)
                 {
@@ -29,7 +45,7 @@ namespace RainEngine
                         });
                         break;
                     case SceneObject.Shapes.StickMan:
-                        FigureDrawing.MakeStickMan(graph, obj.X, obj.Y, obj.Scale_x, obj.Scale_y,pen);
+                        FigureDrawing.MakeStickMan(graph, obj.X, obj.Y, obj.Scale_x, obj.Scale_y, pen);
                         break;
                     case SceneObject.Shapes.Arrow_Vertical:
                         FigureDrawing.MakeArrowVertical(graph, obj.X, obj.Y, obj.Scale_x, obj.Scale_y, pen);
@@ -39,11 +55,6 @@ namespace RainEngine
                         break;
                 }
             }
-
-        }
-        static public void AddSceneObject()
-        {
-           
         }
     }
 }

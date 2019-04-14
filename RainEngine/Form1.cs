@@ -16,7 +16,7 @@ namespace RainEngine
         Point First_pos;
         Point Current_pos;
         Pen ColourPen = new Pen(Color.Black, 3);
-        List<SceneObject> sceneobjs = new List<SceneObject>();
+        Scene scene =new Scene();
         string[] scenabnames = new string[]
         {
             "Circle",
@@ -67,7 +67,7 @@ namespace RainEngine
 
         private void ClearAll()
         {
-            sceneobjs.Clear();
+            scene.Clear();
             graph.Clear(Color.White);
         }
 
@@ -86,10 +86,10 @@ namespace RainEngine
         }
         private void UpdateListbox()
         {
-           foreach(SceneObject scenobj in sceneobjs)
-            {
-             //   listBox1.Items.Add(scenobj.Name);
-            }
+           //foreach(SceneObject scenobj in sceneobjs)
+           // {
+           //  //   listBox1.Items.Add(scenobj.Name);
+           // }
         }
         private void AddObject()
         {
@@ -115,9 +115,9 @@ namespace RainEngine
                         obj = new SceneObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, SceneObject.Shapes.Arrow_Horizontal);
                         break;
                 }
-                sceneobjs.Add(obj);
+                scene.AddNewObject(obj);
             }
-            SceneManager.UpdateAll(sceneobjs, graph, ColourPen);
+            scene.UpdateGraphicsFromScene(scene, graph, ColourPen);
         }
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
@@ -163,7 +163,7 @@ namespace RainEngine
                         FigureDrawing.MakeArrowHorizontal(graph, First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, ColourPen);
                         break;
                 }
-                SceneManager.UpdateAll(sceneobjs,graph,ColourPen);
+                scene.UpdateGraphicsFromScene(scene,graph,ColourPen);
             }
            
         }   
