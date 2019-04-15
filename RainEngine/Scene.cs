@@ -16,9 +16,19 @@ namespace RainEngine
             sceneObjects = new List<SceneObject>();
         }
 
+        public IEnumerable<string> SceneObjectsNames
+        {
+            get
+            {
+                var names = from scenobj in sceneObjects
+                            select scenobj.Name;
+                return names;
+            }
+        } 
+
         public void AddNewObject(SceneObject obj)
         {
-
+            obj.Name = obj.Shape.ToString()+Postfix(obj);
             sceneObjects.Add(obj);
         }
         public void Clear()
@@ -55,6 +65,15 @@ namespace RainEngine
                         break;
                 }
             }
+        }
+        private string Postfix(SceneObject obj)
+        {
+        
+            int query= sceneObjects.AsQueryable().Count(p => p.Shape == obj.Shape);
+            if (query != 0)
+                return "(" + query + ")";
+            else return "";
+
         }
     }
 }

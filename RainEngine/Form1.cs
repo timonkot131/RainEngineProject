@@ -17,6 +17,7 @@ namespace RainEngine
         Point Current_pos;
         Pen ColourPen = new Pen(Color.Black, 3);
         Scene scene =new Scene();
+
         string[] scenabnames = new string[]
         {
             "Circle",
@@ -69,6 +70,7 @@ namespace RainEngine
         {
             scene.Clear();
             graph.Clear(Color.White);
+            UpdateListbox();
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -86,10 +88,11 @@ namespace RainEngine
         }
         private void UpdateListbox()
         {
-           //foreach(SceneObject scenobj in sceneobjs)
-           // {
-           //  //   listBox1.Items.Add(scenobj.Name);
-           // }
+            listBox1.Items.Clear();
+            foreach (string name in scene.SceneObjectsNames)
+            {
+                listBox1.Items.Add(name);
+            }
         }
         private void AddObject()
         {
@@ -186,6 +189,11 @@ namespace RainEngine
         private void timer1_Tick(object sender, EventArgs e)
         {
             
+        }
+
+        private void PictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            MessageBox.Show("dadas");
         }
     }
 }
