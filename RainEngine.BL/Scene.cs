@@ -4,11 +4,22 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RainEngine.BL.Abstract;
 
-namespace RainEngine
+namespace RainEngine.BL
 {
-    class Scene
+    public class Scene:IModel,IScene
     {
+        public void LoadXmlFile(string filepath)
+        {
+
+        }
+
+        public void SaveXmlFile(string filepath)
+        {
+
+        }
+
         private List<SceneObject> sceneObjects;
 
         public Scene()
@@ -24,18 +35,18 @@ namespace RainEngine
                             select scenobj.Name;
                 return names;
             }
-        } 
+        }
 
         public void AddNewObject(SceneObject obj)
         {
-            obj.Name = obj.Shape.ToString()+Postfix(obj);
+            obj.Name = obj.Shape.ToString() + Postfix(obj);
             sceneObjects.Add(obj);
         }
-        public void Clear()
+        public void ClearObjects()
         {
             sceneObjects.Clear();
         }
-        public void UpdateGraphicsFromScene(Scene scene, Graphics graph, Pen pen)
+        public void UpdateGraphicsFromScene(Graphics graph, Pen pen)
         {
             foreach (SceneObject obj in sceneObjects)
             {
@@ -68,8 +79,8 @@ namespace RainEngine
         }
         private string Postfix(SceneObject obj)
         {
-        
-            int query= sceneObjects.AsQueryable().Count(p => p.Shape == obj.Shape);
+
+            int query = sceneObjects.Count(p => p.Shape == obj.Shape);
             if (query != 0)
                 return "(" + query + ")";
             else return "";

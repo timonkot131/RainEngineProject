@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RainEngine
+namespace RainEngine.BL
 {
-    class SceneObject
+    public class SceneObject
     {
         private int x;
         private int y;
@@ -24,7 +24,7 @@ namespace RainEngine
             Arrow_Horizontal
         }
 
-        public SceneObject(int x,int y,int scale_x,int scale_y,Shapes shape)
+        public SceneObject(int x, int y, int scale_x, int scale_y, Shapes shape)
         {
             this.shape = shape;
             this.x = x;
