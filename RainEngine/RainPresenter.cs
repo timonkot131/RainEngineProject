@@ -48,6 +48,8 @@ namespace RainEngine
             this.view.MouseUpEvent += view_MouseUpEvent;
             this.view.MouseMoveEvent += view_MouseMoveEvent;
             this.view.ClearClick += view_ClearClick;
+            this.view.OpenFromXMLClick += view_OpenFromXMLClick;
+            this.view.SaveToXMLClick += view_SaveToXMLClick;
             this.view.UpdateScenabsData(scenabnames, scenabimgs);
         }
 
@@ -61,8 +63,7 @@ namespace RainEngine
         private void view_MouseUpEvent(object sender, EditorEventArgs e)
         {
             SceneObject obj;
-            if (e.IndeciesCount != 0)
-            {
+                  
                 obj = new SceneObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, SceneObject.Shapes.Circle);
                 switch (Convert.ToInt32(e.SelectedIndex))
                 {
@@ -83,7 +84,7 @@ namespace RainEngine
                         break;
                 }
                 model.AddNewObject(obj);
-            }
+            
             model.UpdateGraphicsFromScene(e.Graph, ColourPen);
             view.UpdateSceneObjectsData(model.SceneObjectsNames);
         }
@@ -127,6 +128,25 @@ namespace RainEngine
         {
             model.ClearObjects();
             e.Graph.Clear(Color.White);
+            view.UpdateSceneObjectsData(model.SceneObjectsNames);
+        }
+        private void view_SaveToXMLClick(object sender, EventArgs e)
+        {
+            
+            if (view.SaveFileDialog.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            string filename = view.SaveFileDialog.FileName;
+            model.SaveXmlFile(filename);
+        }
+        private void view_OpenFromXMLClick(object sender, EditorEventArgs e)
+        {
+            if (view.OpenFileDialog.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            string filename = view.OpenFileDialog.FileName;
+            model.LoadXmlFile(filename);
+            model.UpdateGraphicsFromScene(e.Graph, ColourPen);
             view.UpdateSceneObjectsData(model.SceneObjectsNames);
         }
     }

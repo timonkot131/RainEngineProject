@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using RainEngine.BL.Abstract;
 
 namespace RainEngine.BL
@@ -11,13 +12,49 @@ namespace RainEngine.BL
     public class Scene:IModel,IScene
     {
         public void LoadXmlFile(string filepath)
-        {
-
+        {         
+                XDocument xDoc = XDocument.Load(filepath);
+                XElement xScene = xDoc.Element("Scene");
+                IEnumerable<XElement> xSceneObjects =
+                    from xSceneObject in xScene.Elements()
+                    select xSceneObject;
+                foreach (XElement xSceneObject in xSceneObjects)
+                {
+                    Enum.TryParse(xSceneObject.Element("Shape").Value, out SceneObject.Shapes shape);
+                    SceneObject sceneObject = new SceneObject(
+                        Convert.ToInt32(xSceneObject.Element("Coordinates").Element("X").Value),
+                        Convert.ToInt32(xSceneObject.Element("Coordinates").Element("Y").Value),
+                        Convert.ToInt32(xSceneObject.Element("Scale").Element("X").Value),
+                        Convert.ToInt32(xSceneObject.Element("Scale").Element("Y").Value),
+                        shape);
+                    sceneObject.Name = xSceneObject.Attribute("Name").Value;
+                    sceneObjects.Add(sceneObject);
+                }                   
         }
 
         public void SaveXmlFile(string filepath)
-        {
-
+        {                 
+                XDocument xDoc = new XDocument
+                    (
+                      new XElement("Scene")
+                    );
+                foreach (SceneObject sceneObject in sceneObjects)
+                {
+                    xDoc.Element("Scene").Add(
+                        new XElement("SceneObject",
+                        new XAttribute("Name", sceneObject.Name),
+                            new XElement("Shape", sceneObject.Shape),
+                            new XElement("Coordinates",
+                                new XElement("X", sceneObject.X),
+                                new XElement("Y", sceneObject.Y)),
+                            new XElement("Scale",
+                                new XElement("X", sceneObject.Scale_x),
+                                new XElement("Y", sceneObject.Scale_y))
+                       )
+                   );
+                }
+                xDoc.Declaration = new XDeclaration("1.0", "utf-8", "true");
+                xDoc.Save(filepath);                     
         }
 
         private List<SceneObject> sceneObjects;

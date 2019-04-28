@@ -13,15 +13,19 @@ using RainEngine.Entities;
 namespace RainEngine
 {
     public partial class MainForm : Form, IView
-    {
-        
+    {     
         Graphics graph;
 
-       // public event EventHandler<EventArgs> TransferMoney;
+        public OpenFileDialog OpenFileDialog { get; set; }
+
+
+        public SaveFileDialog SaveFileDialog { get; set; }
 
         public MainForm()
         {
             InitializeComponent();
+            OpenFileDialog = openFileDialog1;
+            SaveFileDialog = saveFileDialog1;
             graph = pictureBox1.CreateGraphics();
         }
 
@@ -63,20 +67,35 @@ namespace RainEngine
         {
             MouseDownEvent?.Invoke(this, e);
         }
+
         public event EventHandler<EditorEventArgs> MouseUpEvent;
         protected virtual void OnMouseUpEvent(EditorEventArgs e)
         {
             MouseUpEvent?.Invoke(this, e);
         }
+
         public event EventHandler<EditorEventArgs> MouseMoveEvent;
         protected virtual void OnMouseMoveEvent(EditorEventArgs e)
         {
             MouseMoveEvent?.Invoke(this, e);
         }
+
         public event EventHandler<EditorEventArgs> ClearClick;
         protected virtual void OnClearClick(EditorEventArgs e)
         {
             ClearClick?.Invoke(this, e);
+        }
+
+        public event EventHandler<EventArgs> SaveToXMLClick;
+        protected virtual void OnSaveToXMLClick(EventArgs e)
+        {
+            SaveToXMLClick?.Invoke(this, e);
+        }
+
+        public event EventHandler<EditorEventArgs> OpenFromXMLClick;
+        protected virtual void OnLoadFromXMLClick(EditorEventArgs e)
+        {
+            OpenFromXMLClick?.Invoke(this, e);
         }
         #endregion
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -86,22 +105,28 @@ namespace RainEngine
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            OnMouseUpEvent(new EditorEventArgs(e.X, e.Y, listView1.SelectedIndices.Count, listView1.SelectedIndices[0],graph));         
+            if (listView1.SelectedIndices.Count != 0)
+                OnMouseUpEvent(new EditorEventArgs(e.X, e.Y, listView1.SelectedIndices.Count, listView1.SelectedIndices[0],graph));         
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            
-            if (e.Button == MouseButtons.Left)
-            {
-                OnMouseMoveEvent(new EditorEventArgs(e.X,e.Y,listView1.SelectedIndices.Count,listView1.SelectedIndices[0],graph));              
-            }
-           
+            if (e.Button == MouseButtons.Left && listView1.SelectedIndices.Count!=0)            
+                OnMouseMoveEvent(new EditorEventArgs(e.X,e.Y,listView1.SelectedIndices.Count,listView1.SelectedIndices[0],graph));                        
         }   
-
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
-            OnClearClick(new EditorEventArgs(listView1.SelectedIndices.Count, listView1.SelectedIndices[0], graph));
-        }       
+           OnClearClick(new EditorEventArgs(graph));
+        }
+
+        private void OpenFromXML_Click(object sender, EventArgs e)
+        {
+            OnLoadFromXMLClick(new EditorEventArgs(graph));      
+        }
+
+        private void SaveToXML_Click(object sender, EventArgs e)
+        {
+            OnSaveToXMLClick(e);
+        }
     }
 }

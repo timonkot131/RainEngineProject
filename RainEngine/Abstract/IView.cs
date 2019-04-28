@@ -11,7 +11,12 @@ namespace RainEngine.Abstract
 {
     interface IView
     {
+        OpenFileDialog OpenFileDialog { get; set; }
+
+        SaveFileDialog SaveFileDialog { get; set; }
+
         void UpdateScenabsData(string[] scenabnames, Bitmap[] scenabimgs);
+
         void UpdateSceneObjectsData(IEnumerable<string> SceneObjectsNames);
 
         event EventHandler<MouseEventArgs> MouseDownEvent;
@@ -21,5 +26,9 @@ namespace RainEngine.Abstract
         event EventHandler<EditorEventArgs> MouseMoveEvent;
 
         event EventHandler<EditorEventArgs> ClearClick;
+
+        event EventHandler<EventArgs> SaveToXMLClick;
+
+        event EventHandler<EditorEventArgs> OpenFromXMLClick;
     }
 }
