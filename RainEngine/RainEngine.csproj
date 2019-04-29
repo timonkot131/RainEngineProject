@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Abstract\IView.cs" />
     <Compile Include="Entities\EditorEventArgs.cs" />
+    <Compile Include="Entities\SceneObjectListEventArgs.cs" />
     <Compile Include="RainPresenter.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

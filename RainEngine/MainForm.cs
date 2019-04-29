@@ -18,15 +18,17 @@ namespace RainEngine
 
         public OpenFileDialog OpenFileDialog { get; set; }
 
-
         public SaveFileDialog SaveFileDialog { get; set; }
+
+        public PropertyGrid PropertyGrid { get; set; }       
 
         public MainForm()
         {
             InitializeComponent();
             OpenFileDialog = openFileDialog1;
             SaveFileDialog = saveFileDialog1;
-            graph = pictureBox1.CreateGraphics();
+            PropertyGrid = propertyGrid1;
+            graph = pictureBox1.CreateGraphics();        
         }
 
         public void UpdateScenabsData(string[] scenabnames, Bitmap[] scenabimgs)
@@ -61,6 +63,12 @@ namespace RainEngine
                 listBox1.Items.Add(name);
             }
         }
+
+        public void ClearGraphics()
+        {
+            graph.Clear(Color.White);
+        }
+
         #region Переброс событий
         public event EventHandler<MouseEventArgs> MouseDownEvent;
         protected virtual void OnMouseDownEvent(MouseEventArgs e)
@@ -97,6 +105,17 @@ namespace RainEngine
         {
             OpenFromXMLClick?.Invoke(this, e);
         }
+
+        public event EventHandler<SceneObjectListEventArgs> SelectedIndexChanged;
+        protected virtual void OnSelectedIndexChanged(SceneObjectListEventArgs e)
+        {
+            SelectedIndexChanged?.Invoke(this, e);
+        }
+        public event EventHandler<EditorEventArgs> PropertyValueChanged;
+        protected virtual void OnPropertyValueChangedEventArgs(EditorEventArgs e)
+        {
+            PropertyValueChanged?.Invoke(this, e);
+        }
         #endregion
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -127,6 +146,16 @@ namespace RainEngine
         private void SaveToXML_Click(object sender, EventArgs e)
         {
             OnSaveToXMLClick(e);
+        }
+
+        private void ListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            OnSelectedIndexChanged(new SceneObjectListEventArgs(listBox1.SelectedIndex));
+        }
+
+        private void PropertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            OnPropertyValueChangedEventArgs(new EditorEventArgs(graph));
         }
     }
 }

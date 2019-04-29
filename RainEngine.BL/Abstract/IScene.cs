@@ -12,6 +12,7 @@ namespace RainEngine.BL.Abstract
         void AddNewObject(SceneObject obj);
         void ClearObjects();
         void UpdateGraphicsFromScene(Graphics graph, Pen pen);
+        SceneObject GetSceneObject(int id);
         IEnumerable<string> SceneObjectsNames { get;}
     }
 }

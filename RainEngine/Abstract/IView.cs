@@ -15,9 +15,13 @@ namespace RainEngine.Abstract
 
         SaveFileDialog SaveFileDialog { get; set; }
 
+        PropertyGrid PropertyGrid { get; set; }        
+
         void UpdateScenabsData(string[] scenabnames, Bitmap[] scenabimgs);
 
         void UpdateSceneObjectsData(IEnumerable<string> SceneObjectsNames);
+
+        void ClearGraphics();
 
         event EventHandler<MouseEventArgs> MouseDownEvent;
 
@@ -30,5 +34,10 @@ namespace RainEngine.Abstract
         event EventHandler<EventArgs> SaveToXMLClick;
 
         event EventHandler<EditorEventArgs> OpenFromXMLClick;
+
+        event EventHandler<SceneObjectListEventArgs> SelectedIndexChanged;
+
+        event EventHandler<EditorEventArgs> PropertyValueChanged;
     }
 }
+

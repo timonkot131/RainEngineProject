@@ -12,7 +12,9 @@ namespace RainEngine.BL
     public class Scene:IModel,IScene
     {
         public void LoadXmlFile(string filepath)
-        {         
+        {
+            try
+            {
                 XDocument xDoc = XDocument.Load(filepath);
                 XElement xScene = xDoc.Element("Scene");
                 IEnumerable<XElement> xSceneObjects =
@@ -29,11 +31,18 @@ namespace RainEngine.BL
                         shape);
                     sceneObject.Name = xSceneObject.Attribute("Name").Value;
                     sceneObjects.Add(sceneObject);
-                }                   
+                }
+            }
+            catch(Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(Convert.ToString(e));
+            }
         }
 
         public void SaveXmlFile(string filepath)
-        {                 
+        {
+            try
+            {
                 XDocument xDoc = new XDocument
                     (
                       new XElement("Scene")
@@ -54,7 +63,12 @@ namespace RainEngine.BL
                    );
                 }
                 xDoc.Declaration = new XDeclaration("1.0", "utf-8", "true");
-                xDoc.Save(filepath);                     
+                xDoc.Save(filepath);
+            }
+            catch(Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(Convert.ToString(e));
+            }
         }
 
         private List<SceneObject> sceneObjects;
@@ -64,25 +78,17 @@ namespace RainEngine.BL
             sceneObjects = new List<SceneObject>();
         }
 
-        public IEnumerable<string> SceneObjectsNames
-        {
-            get
-            {
-                var names = from scenobj in sceneObjects
-                            select scenobj.Name;
-                return names;
-            }
-        }
-
         public void AddNewObject(SceneObject obj)
         {
             obj.Name = obj.Shape.ToString() + Postfix(obj);
             sceneObjects.Add(obj);
         }
+
         public void ClearObjects()
         {
             sceneObjects.Clear();
         }
+
         public void UpdateGraphicsFromScene(Graphics graph, Pen pen)
         {
             foreach (SceneObject obj in sceneObjects)
@@ -114,6 +120,21 @@ namespace RainEngine.BL
                 }
             }
         }
+        public SceneObject GetSceneObject(int id)
+        {
+            return sceneObjects[id];
+        }
+
+        public IEnumerable<string> SceneObjectsNames
+        {
+            get
+            {
+                var names = from scenobj in sceneObjects
+                            select scenobj.Name;
+                return names;
+            }
+        }
+    
         private string Postfix(SceneObject obj)
         {
 

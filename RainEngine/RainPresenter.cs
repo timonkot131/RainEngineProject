@@ -50,6 +50,8 @@ namespace RainEngine
             this.view.ClearClick += view_ClearClick;
             this.view.OpenFromXMLClick += view_OpenFromXMLClick;
             this.view.SaveToXMLClick += view_SaveToXMLClick;
+            this.view.SelectedIndexChanged += view_SelectedIndexChanged;
+            this.view.PropertyValueChanged += view_PropertyValueChanged;
             this.view.UpdateScenabsData(scenabnames, scenabimgs);
         }
 
@@ -62,8 +64,7 @@ namespace RainEngine
         }
         private void view_MouseUpEvent(object sender, EditorEventArgs e)
         {
-            SceneObject obj;
-                  
+                SceneObject obj;                 
                 obj = new SceneObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, SceneObject.Shapes.Circle);
                 switch (Convert.ToInt32(e.SelectedIndex))
                 {
@@ -92,9 +93,8 @@ namespace RainEngine
         {
             Current_pos.X = e.X;
             Current_pos.Y = e.Y;
-            e.Graph.Clear(Color.White);           
-            if (e.IndeciesCount != 0)
-                switch (Convert.ToInt32(e.SelectedIndex))
+            view.ClearGraphics();
+            switch (Convert.ToInt32(e.SelectedIndex))
                 {
                     default:
                         e.Graph.DrawEllipse(ColourPen, First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y);
@@ -127,7 +127,7 @@ namespace RainEngine
         private void view_ClearClick(object sender, EditorEventArgs e)
         {
             model.ClearObjects();
-            e.Graph.Clear(Color.White);
+            view.ClearGraphics();
             view.UpdateSceneObjectsData(model.SceneObjectsNames);
         }
         private void view_SaveToXMLClick(object sender, EventArgs e)
@@ -145,7 +145,20 @@ namespace RainEngine
                 return;
 
             string filename = view.OpenFileDialog.FileName;
+            model.ClearObjects();
+            view.ClearGraphics();
             model.LoadXmlFile(filename);
+            model.UpdateGraphicsFromScene(e.Graph, ColourPen);
+            view.UpdateSceneObjectsData(model.SceneObjectsNames);
+        }
+
+        private void view_SelectedIndexChanged(object sender, SceneObjectListEventArgs e)
+        {
+            view.PropertyGrid.SelectedObject = model.GetSceneObject(e.ItemIndex);  
+        }
+        private void view_PropertyValueChanged(object sender, EditorEventArgs e)
+        {
+            view.ClearGraphics();
             model.UpdateGraphicsFromScene(e.Graph, ColourPen);
             view.UpdateSceneObjectsData(model.SceneObjectsNames);
         }

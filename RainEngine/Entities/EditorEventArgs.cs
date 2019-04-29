@@ -35,5 +35,6 @@ namespace RainEngine.Entities
         public int IndeciesCount { get; private set; }
 
         public int SelectedIndex { get; private set; }
+
     }
 }
