@@ -19,6 +19,14 @@ namespace RainEngine.Entities
             this.SelectedIndex = SelectedIndex;
             this.Graph = Graph;
         }
+        public EditorEventArgs(int X, int Y, int IndeciesCount, Graphics Graph)
+        {
+            this.X = X;
+            this.Y = Y;
+            this.IndeciesCount = IndeciesCount;
+            SelectedIndex = 0;
+            this.Graph = Graph;
+        }
         public EditorEventArgs(Graphics Graph)
         {
             X = 0;

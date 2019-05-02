@@ -55,12 +55,33 @@ namespace RainEngine
             this.view.UpdateScenabsData(scenabnames, scenabimgs);
         }
 
-        private void view_MouseDownEvent(object sender, MouseEventArgs e)
+        private void view_MouseDownEvent(object sender, EditorEventArgs e)
         {
             First_pos.X = e.X;
             First_pos.Y = e.Y;
             Current_pos.X = e.X;
             Current_pos.Y = e.Y;
+            if (e.IndeciesCount == 0)
+            {
+                view.ClearGraphics();
+                model.UpdateGraphicsFromScene(e.Graph, ColourPen);
+                //Func<SceneObject, bool> condition = (sceneobject) => (First_pos.X > sceneobject.X && First_pos.X < (sceneobject.X + sceneobject.Scale_x))
+                // && (First_pos.Y > sceneobject.Y && First_pos.X<(sceneobject.Y+sceneobject.Scale_y));
+                Func<SceneObject, bool> condition = (sceneobject) => (First_pos.X > sceneobject.X && First_pos.X < (sceneobject.X + sceneobject.Scale_x))
+                && (First_pos.Y > sceneobject.Y && First_pos.Y < (sceneobject.Y + sceneobject.Scale_y));
+                SceneObject obj = model.GetObjectsQuery(condition).LastOrDefault();
+                if (obj != null)
+                {
+                    e.Graph.DrawPolygon(new Pen(Color.Green), new Point[]
+                    {
+                            new Point(obj.X,obj.Y),
+                            new Point(obj.X+obj.Scale_x,obj.Y),
+                            new Point(obj.X+obj.Scale_x,obj.Y+obj.Scale_y),
+                            new Point(obj.X,obj.Y+obj.Scale_y)
+                    });
+                    view.PropertyGrid.SelectedObject = obj;
+                }
+            }
         }
         private void view_MouseUpEvent(object sender, EditorEventArgs e)
         {

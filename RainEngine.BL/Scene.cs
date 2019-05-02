@@ -134,7 +134,12 @@ namespace RainEngine.BL
                 return names;
             }
         }
-    
+        
+        public IEnumerable<SceneObject> GetObjectsQuery(Func<SceneObject,bool> condition)
+        {
+            return sceneObjects.Where(condition);
+        }
+
         private string Postfix(SceneObject obj)
         {
 

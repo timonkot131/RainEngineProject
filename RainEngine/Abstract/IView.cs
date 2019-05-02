@@ -23,7 +23,7 @@ namespace RainEngine.Abstract
 
         void ClearGraphics();
 
-        event EventHandler<MouseEventArgs> MouseDownEvent;
+        event EventHandler<EditorEventArgs> MouseDownEvent;
 
         event EventHandler<EditorEventArgs> MouseUpEvent;
 

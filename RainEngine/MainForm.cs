@@ -13,14 +13,14 @@ using RainEngine.Entities;
 namespace RainEngine
 {
     public partial class MainForm : Form, IView
-    {     
+    {
         Graphics graph;
 
         public OpenFileDialog OpenFileDialog { get; set; }
 
         public SaveFileDialog SaveFileDialog { get; set; }
 
-        public PropertyGrid PropertyGrid { get; set; }       
+        public PropertyGrid PropertyGrid { get; set; }
 
         public MainForm()
         {
@@ -28,7 +28,7 @@ namespace RainEngine
             OpenFileDialog = openFileDialog1;
             SaveFileDialog = saveFileDialog1;
             PropertyGrid = propertyGrid1;
-            graph = pictureBox1.CreateGraphics();        
+            graph = pictureBox1.CreateGraphics();
         }
 
         public void UpdateScenabsData(string[] scenabnames, Bitmap[] scenabimgs)
@@ -62,6 +62,14 @@ namespace RainEngine
             {
                 listBox1.Items.Add(name);
             }
+            //EditorEventArgs[] evs = new EditorEventArgs[] {new EditorEventArgs(3,4,5,graph), new EditorEventArgs(3, 4, 53, graph) };
+            //for(int i = 0; i < evs.Length; i++)
+            //{
+            //    listBox1.Items.Add(evs[i]);
+            //}
+            //listBox1.DisplayMember = "IndeciesCount";
+            //EditorEventArgs ev22 = (EditorEventArgs)listBox1.Items[1];
+            //MessageBox.Show(Convert.ToString(ev22.IndeciesCount));
         }
 
         public void ClearGraphics()
@@ -70,8 +78,9 @@ namespace RainEngine
         }
 
         #region Переброс событий
-        public event EventHandler<MouseEventArgs> MouseDownEvent;
-        protected virtual void OnMouseDownEvent(MouseEventArgs e)
+
+        public event EventHandler<EditorEventArgs> MouseDownEvent;
+        protected virtual void OnMouseDownEvent(EditorEventArgs e)
         {
             MouseDownEvent?.Invoke(this, e);
         }
@@ -119,7 +128,7 @@ namespace RainEngine
         #endregion
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            OnMouseDownEvent(e);     
+            OnMouseDownEvent(new EditorEventArgs(e.X, e.Y, listView1.SelectedIndices.Count, graph));     
         }
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
@@ -156,6 +165,11 @@ namespace RainEngine
         private void PropertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             OnPropertyValueChangedEventArgs(new EditorEventArgs(graph));
+        }
+
+        private void ListView1_Leave(object sender, EventArgs e)
+        {
+            listView1.SelectedItems.Clear();
         }
     }
 }

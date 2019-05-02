@@ -14,5 +14,6 @@ namespace RainEngine.BL.Abstract
         void UpdateGraphicsFromScene(Graphics graph, Pen pen);
         SceneObject GetSceneObject(int id);
         IEnumerable<string> SceneObjectsNames { get;}
+        IEnumerable<SceneObject> GetObjectsQuery(Func<SceneObject, bool> condition);
     }
 }
