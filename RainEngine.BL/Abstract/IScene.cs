@@ -9,11 +9,11 @@ namespace RainEngine.BL.Abstract
 {
     public interface IScene:IModel
     {
-        void AddNewObject(SceneObject obj);
+        void AddNewObject(VectorObject obj);
         void ClearObjects();
         void UpdateGraphicsFromScene(Graphics graph, Pen pen);
-        SceneObject GetSceneObject(int id);
+        VectorObject GetSceneObject(int id);
         IEnumerable<string> SceneObjectsNames { get;}
-        IEnumerable<SceneObject> GetObjectsQuery(Func<SceneObject, bool> condition);
+        IEnumerable<VectorObject> GetObjectsQuery(Func<VectorObject, bool> condition);
     }
 }

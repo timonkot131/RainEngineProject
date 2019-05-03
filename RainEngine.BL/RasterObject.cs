@@ -1,54 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel;
+using RainEngine.BL.Abstract;
 
 namespace RainEngine.BL
 {
-    public class SceneObject
+    public class RasterObject : SceneObject
     {
         private int x;
         private int y;
         private int scale_x;
         private int scale_y;
         private string name;
-        private Shapes shape;
 
-        public enum Shapes
+        public RasterObject(int x, int y, int scale_x, int scale_y)
         {
-            Circle,
-            Square,
-            StickMan,
-            Arrow_Vertical,
-            Arrow_Horizontal
-        }
-
-        public SceneObject(int x, int y, int scale_x, int scale_y, Shapes shape)
-        {
-            this.shape = shape;
             this.x = x;
             this.y = y;
             this.scale_x = scale_x;
             this.scale_y = scale_y;
         }
 
-        [Browsable(true)]
-        [Description("Shape of object")]
-        [DisplayName("Shape")]
-        [Category("Инспектор")]
-        public Shapes Shape
+        public override void Create()
         {
-            get { return shape; }
-            set { shape = value; }
+
+        }
+
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Description("Type of object")]
+        [DisplayName("Type")]
+        [Category("Инспектор")]
+        public override SceneObject Type
+        {
+            get { return this; }
         }
 
         [Browsable(true)]
         [Description("X coordinate of object")]
         [DisplayName("X")]
         [Category("Инспектор")]
-        public int X
+        public override int X
         {
             get { return x; }
             set { x = value; }
@@ -57,7 +53,7 @@ namespace RainEngine.BL
         [Description("Y coordinate of object")]
         [DisplayName("Y")]
         [Category("Инспектор")]
-        public int Y
+        public override int Y
         {
             get { return y; }
             set { y = value; }
@@ -67,7 +63,7 @@ namespace RainEngine.BL
         [Description("X scale of object")]
         [DisplayName("Scale_x")]
         [Category("Инспектор")]
-        public int Scale_x
+        public override int Scale_x
         {
             get { return scale_x; }
             set { scale_x = value; }
@@ -76,7 +72,7 @@ namespace RainEngine.BL
         [Description("Y scale of object")]
         [DisplayName("Scale_y")]
         [Category("Инспектор")]
-        public int Scale_y
+        public override int Scale_y
         {
             get { return scale_y; }
             set { scale_y = value; }
@@ -85,11 +81,10 @@ namespace RainEngine.BL
         [Description("Name of object")]
         [DisplayName("Name")]
         [Category("Инспектор")]
-        public string Name
+        public override string Name
         {
             get { return name; }
             set { name = value; }
         }
-
     }
 }

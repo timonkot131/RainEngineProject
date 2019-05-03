@@ -45,10 +45,12 @@
   <ItemGroup>
     <Compile Include="Abstract\IModel.cs" />
     <Compile Include="Abstract\IScene.cs" />
+    <Compile Include="Abstract\SceneObject.cs" />
     <Compile Include="FigureDrawing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RasterObject.cs" />
     <Compile Include="Scene.cs" />
-    <Compile Include="SceneObject.cs" />
+    <Compile Include="VectorObject.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

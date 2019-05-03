@@ -65,11 +65,9 @@ namespace RainEngine
             {
                 view.ClearGraphics();
                 model.UpdateGraphicsFromScene(e.Graph, ColourPen);
-                //Func<SceneObject, bool> condition = (sceneobject) => (First_pos.X > sceneobject.X && First_pos.X < (sceneobject.X + sceneobject.Scale_x))
-                // && (First_pos.Y > sceneobject.Y && First_pos.X<(sceneobject.Y+sceneobject.Scale_y));
-                Func<SceneObject, bool> condition = (sceneobject) => (First_pos.X > sceneobject.X && First_pos.X < (sceneobject.X + sceneobject.Scale_x))
+                Func<VectorObject, bool> condition = (sceneobject) => (First_pos.X > sceneobject.X && First_pos.X < (sceneobject.X + sceneobject.Scale_x))
                 && (First_pos.Y > sceneobject.Y && First_pos.Y < (sceneobject.Y + sceneobject.Scale_y));
-                SceneObject obj = model.GetObjectsQuery(condition).LastOrDefault();
+                VectorObject obj = model.GetObjectsQuery(condition).LastOrDefault();
                 if (obj != null)
                 {
                     e.Graph.DrawPolygon(new Pen(Color.Green), new Point[]
@@ -85,24 +83,24 @@ namespace RainEngine
         }
         private void view_MouseUpEvent(object sender, EditorEventArgs e)
         {
-                SceneObject obj;                 
-                obj = new SceneObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, SceneObject.Shapes.Circle);
+                VectorObject obj;                 
+                obj = new VectorObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, VectorObject.Shapes.Circle);
                 switch (Convert.ToInt32(e.SelectedIndex))
                 {
                     case 0:
-                        obj = new SceneObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, SceneObject.Shapes.Circle);
+                        obj = new VectorObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, VectorObject.Shapes.Circle);
                         break;
                     case 1:
-                        obj = new SceneObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, SceneObject.Shapes.Square);
+                        obj = new VectorObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, VectorObject.Shapes.Square);
                         break;
                     case 2:
-                        obj = new SceneObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, SceneObject.Shapes.StickMan);
+                        obj = new VectorObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, VectorObject.Shapes.StickMan);
                         break;
                     case 3:
-                        obj = new SceneObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, SceneObject.Shapes.Arrow_Vertical);
+                        obj = new VectorObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, VectorObject.Shapes.Arrow_Vertical);
                         break;
                     case 4:
-                        obj = new SceneObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, SceneObject.Shapes.Arrow_Horizontal);
+                        obj = new VectorObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, VectorObject.Shapes.Arrow_Horizontal);
                         break;
                 }
                 model.AddNewObject(obj);
@@ -175,7 +173,17 @@ namespace RainEngine
 
         private void view_SelectedIndexChanged(object sender, SceneObjectListEventArgs e)
         {
-            view.PropertyGrid.SelectedObject = model.GetSceneObject(e.ItemIndex);  
+            view.ClearGraphics();
+            model.UpdateGraphicsFromScene(e.Graph, ColourPen);
+            VectorObject obj = model.GetSceneObject(e.ItemIndex);
+            view.PropertyGrid.SelectedObject = obj;
+            e.Graph.DrawPolygon(new Pen(Color.Green), new Point[]
+                {
+                            new Point(obj.X,obj.Y),
+                            new Point(obj.X+obj.Scale_x,obj.Y),
+                            new Point(obj.X+obj.Scale_x,obj.Y+obj.Scale_y),
+                            new Point(obj.X,obj.Y+obj.Scale_y)
+            });  
         }
         private void view_PropertyValueChanged(object sender, EditorEventArgs e)
         {

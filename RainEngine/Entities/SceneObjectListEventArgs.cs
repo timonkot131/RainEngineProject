@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace RainEngine.Entities
 {
@@ -14,5 +15,7 @@ namespace RainEngine.Entities
             this.ItemIndex = ItemIndex;
         }
         public int ItemIndex { get; private set; }
+
+        public Graphics Graph { get; set; }
     }
 }

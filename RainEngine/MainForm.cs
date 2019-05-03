@@ -118,6 +118,7 @@ namespace RainEngine
         public event EventHandler<SceneObjectListEventArgs> SelectedIndexChanged;
         protected virtual void OnSelectedIndexChanged(SceneObjectListEventArgs e)
         {
+            e.Graph = graph;
             SelectedIndexChanged?.Invoke(this, e);
         }
         public event EventHandler<EditorEventArgs> PropertyValueChanged;
