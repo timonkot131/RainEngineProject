@@ -31,7 +31,7 @@ namespace RainEngine
             graph = pictureBox1.CreateGraphics();
         }
 
-        public void UpdateScenabsData(string[] scenabnames, Bitmap[] scenabimgs)
+        public void UpdateScenabsData(List<BL.Abstract.SceneObject> scenabs, Bitmap[] scenabimgs)
         {
             listView1.Items.Clear();
             ImageList imageList = new ImageList();
@@ -46,30 +46,24 @@ namespace RainEngine
                 imageList.Images.Add(bm);
             }
             listView1.LargeImageList = imageList;
-            string[] ObjectNames = scenabnames;
-            for (int i = 0; i < ObjectNames.Length; i++)
+            List<BL.Abstract.SceneObject> Objects = scenabs;
+            for (int i = 0; i < Objects.Count; i++)
             {
-                ListViewItem listViewItem = new ListViewItem(ObjectNames[i]);
+                ListViewItem listViewItem = new ListViewItem(Objects[i].Name);
                 listViewItem.ImageIndex = i;
+                listViewItem.Tag = Objects[i];
                 listView1.Items.Add(listViewItem);
             }
         }
 
-        public void UpdateSceneObjectsData(IEnumerable<string> SceneObjectsNames)
+        public void UpdateSceneObjectsData(List<BL.Abstract.SceneObject> SceneObjs)
         {
             listBox1.Items.Clear();
-            foreach (string name in SceneObjectsNames)
+            foreach (BL.Abstract.SceneObject sceneObj in SceneObjs)
             {
-                listBox1.Items.Add(name);
+                listBox1.Items.Add(sceneObj);
             }
-            //EditorEventArgs[] evs = new EditorEventArgs[] {new EditorEventArgs(3,4,5,graph), new EditorEventArgs(3, 4, 53, graph) };
-            //for(int i = 0; i < evs.Length; i++)
-            //{
-            //    listBox1.Items.Add(evs[i]);
-            //}
-            //listBox1.DisplayMember = "IndeciesCount";
-            //EditorEventArgs ev22 = (EditorEventArgs)listBox1.Items[1];
-            //MessageBox.Show(Convert.ToString(ev22.IndeciesCount));
+            listBox1.DisplayMember = "Name";
         }
 
         public void ClearGraphics()
@@ -135,13 +129,13 @@ namespace RainEngine
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             if (listView1.SelectedIndices.Count != 0)
-                OnMouseUpEvent(new EditorEventArgs(e.X, e.Y, listView1.SelectedIndices.Count, listView1.SelectedIndices[0],graph));         
+                OnMouseUpEvent(new EditorEventArgs(e.X, e.Y, listView1.SelectedIndices.Count,(BL.Abstract.SceneObject)listView1.SelectedItems[0].Tag, graph));         
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && listView1.SelectedIndices.Count!=0)            
-                OnMouseMoveEvent(new EditorEventArgs(e.X,e.Y,listView1.SelectedIndices.Count,listView1.SelectedIndices[0],graph));                        
+                OnMouseMoveEvent(new EditorEventArgs(e.X,e.Y,listView1.SelectedIndices.Count,(BL.Abstract.SceneObject)listView1.SelectedItems[0].Tag, graph));                        
         }   
         private void toolStripButton3_Click(object sender, EventArgs e)
         {

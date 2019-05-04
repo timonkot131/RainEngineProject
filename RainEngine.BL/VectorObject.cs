@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,17 +27,42 @@ namespace RainEngine.BL
             Arrow_Horizontal
         }
 
-        public VectorObject(int x, int y, int scale_x, int scale_y, Shapes shape)
+        public VectorObject(string name,int x, int y, int scale_x, int scale_y, Shapes shape)
         {
+            this.name = name;
             this.shape = shape;
             this.x = x;
             this.y = y;
             this.scale_x = scale_x;
             this.scale_y = scale_y;
         }
-        public override void Create()
+        public override void Create(Graphics graphics,Pen pen)
         {
+            switch (shape)
+            {
+                case Shapes.Circle:
+                    graphics.DrawEllipse(pen, X, Y, Scale_x, Scale_y);
+                    break;
+                case Shapes.Square:
+                    graphics.DrawPolygon(pen, new Point[]
+                        {
+                            new Point(X,Y),
+                            new Point(X+Scale_x,Y),
+                            new Point(X+Scale_x,Y+Scale_y),
+                            new Point(X,Y+Scale_y)
 
+                        });
+                    break;
+                case Shapes.StickMan:
+                    FigureDrawing.MakeStickMan(graphics, X, Y, Scale_x, Scale_y, pen);
+                    break;
+                case Shapes.Arrow_Horizontal:
+                    FigureDrawing.MakeArrowHorizontal(graphics, X, Y, Scale_x, Scale_y, pen);
+                    break;
+                case Shapes.Arrow_Vertical:
+                    FigureDrawing.MakeArrowVertical(graphics, X, Y, Scale_x, Scale_y, pen);
+                    break;
+            }
         }
 
         [Browsable(true)]

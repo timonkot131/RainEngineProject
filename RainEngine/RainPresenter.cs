@@ -20,13 +20,13 @@ namespace RainEngine
         Pen ColourPen = new Pen(Color.Black, 3);
 
 
-        string[] scenabnames = new string[]
+        List<SceneObject> scenabs = new List<SceneObject>()
         {
-            "Circle",
-            "Square",
-            "Stickman",
-            "Arrow Vertical",
-            "Arrow Horizontal",
+            new VectorObject("Circle",0,0,100,100,VectorObject.Shapes.Circle),
+            new VectorObject("Square",0,0,100,100,VectorObject.Shapes.Square),
+            new VectorObject("StickMan",0,0,100,100,VectorObject.Shapes.StickMan),
+            new VectorObject("Arrow_Vertical",0,0,100,100,VectorObject.Shapes.Arrow_Vertical),
+            new VectorObject("Arrow_Horizontal",0,0,100,100,VectorObject.Shapes.Arrow_Horizontal)
         };
         Bitmap[] scenabimgs = new Bitmap[]
         {
@@ -52,7 +52,7 @@ namespace RainEngine
             this.view.SaveToXMLClick += view_SaveToXMLClick;
             this.view.SelectedIndexChanged += view_SelectedIndexChanged;
             this.view.PropertyValueChanged += view_PropertyValueChanged;
-            this.view.UpdateScenabsData(scenabnames, scenabimgs);
+            this.view.UpdateScenabsData(scenabs, scenabimgs);
         }
 
         private void view_MouseDownEvent(object sender, EditorEventArgs e)
@@ -65,9 +65,9 @@ namespace RainEngine
             {
                 view.ClearGraphics();
                 model.UpdateGraphicsFromScene(e.Graph, ColourPen);
-                Func<VectorObject, bool> condition = (sceneobject) => (First_pos.X > sceneobject.X && First_pos.X < (sceneobject.X + sceneobject.Scale_x))
+                Func<SceneObject, bool> condition = (sceneobject) => (First_pos.X > sceneobject.X && First_pos.X < (sceneobject.X + sceneobject.Scale_x))
                 && (First_pos.Y > sceneobject.Y && First_pos.Y < (sceneobject.Y + sceneobject.Scale_y));
-                VectorObject obj = model.GetObjectsQuery(condition).LastOrDefault();
+                SceneObject obj = model.GetObjectsQuery(condition).LastOrDefault();
                 if (obj != null)
                 {
                     e.Graph.DrawPolygon(new Pen(Color.Green), new Point[]
@@ -83,71 +83,33 @@ namespace RainEngine
         }
         private void view_MouseUpEvent(object sender, EditorEventArgs e)
         {
-                VectorObject obj;                 
-                obj = new VectorObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, VectorObject.Shapes.Circle);
-                switch (Convert.ToInt32(e.SelectedIndex))
-                {
-                    case 0:
-                        obj = new VectorObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, VectorObject.Shapes.Circle);
-                        break;
-                    case 1:
-                        obj = new VectorObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, VectorObject.Shapes.Square);
-                        break;
-                    case 2:
-                        obj = new VectorObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, VectorObject.Shapes.StickMan);
-                        break;
-                    case 3:
-                        obj = new VectorObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, VectorObject.Shapes.Arrow_Vertical);
-                        break;
-                    case 4:
-                        obj = new VectorObject(First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, VectorObject.Shapes.Arrow_Horizontal);
-                        break;
-                }
-                model.AddNewObject(obj);
-            
+            e.SelectedObject.X = First_pos.X;
+            e.SelectedObject.Y = First_pos.Y;
+            if (e.SelectedObject.Type is VectorObject)
+            {
+                VectorObject obj= (VectorObject)e.SelectedObject;
+                model.AddNewObject(new VectorObject(obj.Name, obj.X, obj.Y, obj.Scale_x, obj.Scale_y, obj.Shape));
+            }
             model.UpdateGraphicsFromScene(e.Graph, ColourPen);
-            view.UpdateSceneObjectsData(model.SceneObjectsNames);
+            view.UpdateSceneObjectsData(model.SceneObjects);
         }
         private void view_MouseMoveEvent(object sender, EditorEventArgs e)
         {
             Current_pos.X = e.X;
             Current_pos.Y = e.Y;
             view.ClearGraphics();
-            switch (Convert.ToInt32(e.SelectedIndex))
-                {
-                    default:
-                        e.Graph.DrawEllipse(ColourPen, First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y);
-                        break;
-                    case 0:
-                        e.Graph.DrawEllipse(ColourPen, First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y);
-                        break;
-                    case 1:
-                        e.Graph.DrawPolygon(ColourPen, new Point[]
-                        {
-                            new Point(First_pos.X,First_pos.Y),
-                            new Point(Current_pos.X,First_pos.Y),
-                            new Point(Current_pos.X,Current_pos.Y),
-                            new Point(First_pos.X,Current_pos.Y)
-
-                        });
-                        break;
-                    case 2:
-                        FigureDrawing.MakeStickMan(e.Graph, First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, ColourPen);
-                        break;
-                    case 3:
-                        FigureDrawing.MakeArrowVertical(e.Graph, First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, ColourPen);
-                        break;
-                    case 4:
-                        FigureDrawing.MakeArrowHorizontal(e.Graph, First_pos.X, First_pos.Y, Current_pos.X - First_pos.X, Current_pos.Y - First_pos.Y, ColourPen);
-                        break;
-                }
+            e.SelectedObject.X = First_pos.X;
+            e.SelectedObject.Y = First_pos.Y;
+            e.SelectedObject.Scale_x = Current_pos.X - First_pos.X;
+            e.SelectedObject.Scale_y = Current_pos.Y - First_pos.Y;
+            e.SelectedObject.Create(e.Graph, ColourPen);
             model.UpdateGraphicsFromScene(e.Graph, ColourPen);
         }
         private void view_ClearClick(object sender, EditorEventArgs e)
         {
             model.ClearObjects();
             view.ClearGraphics();
-            view.UpdateSceneObjectsData(model.SceneObjectsNames);
+            view.UpdateSceneObjectsData(model.SceneObjects);
         }
         private void view_SaveToXMLClick(object sender, EventArgs e)
         {
@@ -168,14 +130,14 @@ namespace RainEngine
             view.ClearGraphics();
             model.LoadXmlFile(filename);
             model.UpdateGraphicsFromScene(e.Graph, ColourPen);
-            view.UpdateSceneObjectsData(model.SceneObjectsNames);
+            view.UpdateSceneObjectsData(model.SceneObjects);
         }
 
         private void view_SelectedIndexChanged(object sender, SceneObjectListEventArgs e)
         {
             view.ClearGraphics();
             model.UpdateGraphicsFromScene(e.Graph, ColourPen);
-            VectorObject obj = model.GetSceneObject(e.ItemIndex);
+            SceneObject obj = model.GetSceneObject(e.Item);
             view.PropertyGrid.SelectedObject = obj;
             e.Graph.DrawPolygon(new Pen(Color.Green), new Point[]
                 {
@@ -189,7 +151,7 @@ namespace RainEngine
         {
             view.ClearGraphics();
             model.UpdateGraphicsFromScene(e.Graph, ColourPen);
-            view.UpdateSceneObjectsData(model.SceneObjectsNames);
+            view.UpdateSceneObjectsData(model.SceneObjects);
         }
     }
 }

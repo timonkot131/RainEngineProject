@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace RainEngine.BL.Abstract
 {
     public abstract class SceneObject
     {
-        public abstract void Create();
+        public abstract void Create(Graphics graphics, Pen pen);
 
         public abstract int X
         {

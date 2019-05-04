@@ -9,7 +9,7 @@ using RainEngine.BL.Abstract;
 
 namespace RainEngine.BL
 {
-    public class RasterObject : SceneObject
+    public class EmptyObject:SceneObject
     {
         private int x;
         private int y;
@@ -17,18 +17,11 @@ namespace RainEngine.BL
         private int scale_y;
         private string name;
 
-        public RasterObject(int x, int y, int scale_x, int scale_y)
-        {
-            this.x = x;
-            this.y = y;
-            this.scale_x = scale_x;
-            this.scale_y = scale_y;
-        }
-
-        public override void Create(Graphics graphics, Pen pen)
+        public override void Create(Graphics graphics,Pen pen)
         {
 
         }
+
 
         [Browsable(true)]
         [ReadOnly(true)]

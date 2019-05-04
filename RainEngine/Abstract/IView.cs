@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RainEngine.BL.Abstract;
 using RainEngine.Entities;
 
 namespace RainEngine.Abstract
@@ -17,9 +18,9 @@ namespace RainEngine.Abstract
 
         PropertyGrid PropertyGrid { get; set; }        
 
-        void UpdateScenabsData(string[] scenabnames, Bitmap[] scenabimgs);
+        void UpdateScenabsData(List<SceneObject> scenabs, Bitmap[] scenabimgs);
 
-        void UpdateSceneObjectsData(IEnumerable<string> SceneObjectsNames);
+        void UpdateSceneObjectsData(List<SceneObject> SceneObjs);
 
         void ClearGraphics();
 

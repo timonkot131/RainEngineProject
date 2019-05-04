@@ -5,18 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RainEngine.BL;
+using RainEngine.BL.Abstract;
 
 namespace RainEngine.Entities
 {
     public class EditorEventArgs : EventArgs
     {
 
-        public EditorEventArgs(int X, int Y, int IndeciesCount, int SelectedIndex, Graphics Graph)
+        public EditorEventArgs(int X, int Y, int IndeciesCount, SceneObject SelectedObject, Graphics Graph)
         {
             this.X = X;
             this.Y = Y;
             this.IndeciesCount = IndeciesCount;
-            this.SelectedIndex = SelectedIndex;
+            this.SelectedObject = SelectedObject;
             this.Graph = Graph;
         }
         public EditorEventArgs(int X, int Y, int IndeciesCount, Graphics Graph)
@@ -24,7 +26,7 @@ namespace RainEngine.Entities
             this.X = X;
             this.Y = Y;
             this.IndeciesCount = IndeciesCount;
-            SelectedIndex = 0;
+            SelectedObject = new EmptyObject();
             this.Graph = Graph;
         }
         public EditorEventArgs(Graphics Graph)
@@ -32,7 +34,7 @@ namespace RainEngine.Entities
             X = 0;
             Y = 0;
             IndeciesCount = 0;
-            SelectedIndex = 0;
+            SelectedObject = new EmptyObject();
             this.Graph = Graph;
         }
         public Graphics Graph { get; private set; }
@@ -42,7 +44,7 @@ namespace RainEngine.Entities
 
         public int IndeciesCount { get; private set; }
 
-        public int SelectedIndex { get; private set; }
+        public SceneObject SelectedObject { get; private set; }
 
     }
 }

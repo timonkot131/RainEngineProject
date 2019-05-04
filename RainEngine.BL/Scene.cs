@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Windows.Forms;
 using RainEngine.BL.Abstract;
 
 namespace RainEngine.BL
 {
-    public class Scene:IModel,IScene
+    public class Scene:IScene
     {
         public void LoadXmlFile(string filepath)
         {
@@ -24,6 +25,7 @@ namespace RainEngine.BL
                 {
                     Enum.TryParse(xSceneObject.Element("Shape").Value, out VectorObject.Shapes shape);
                     VectorObject sceneObject = new VectorObject(
+                        xSceneObject.Attribute("Name").Value,
                         Convert.ToInt32(xSceneObject.Element("Coordinates").Element("X").Value),
                         Convert.ToInt32(xSceneObject.Element("Coordinates").Element("Y").Value),
                         Convert.ToInt32(xSceneObject.Element("Scale").Element("X").Value),
@@ -71,17 +73,23 @@ namespace RainEngine.BL
             }
         }
 
-        private List<VectorObject> sceneObjects;
+        private List<SceneObject> sceneObjects;
 
         public Scene()
         {
-            sceneObjects = new List<VectorObject>();
+            sceneObjects = new List<SceneObject>();
         }
 
-        public void AddNewObject(VectorObject obj)
+        public void AddNewObject(SceneObject obj)
         {
-            obj.Name = obj.Shape.ToString() + Postfix(obj);
+            obj.Name += Postfix(obj);
             sceneObjects.Add(obj);
+            string box = "";
+            foreach(SceneObject object1 in sceneObjects)
+            {
+                box += object1.Name+"\n";
+            }
+            MessageBox.Show(box);
         }
 
         public void ClearObjects()
@@ -91,59 +99,33 @@ namespace RainEngine.BL
 
         public void UpdateGraphicsFromScene(Graphics graph, Pen pen)
         {
-            foreach (VectorObject obj in sceneObjects)
+            foreach (SceneObject obj in sceneObjects)
             {
-                switch (obj.Shape)
-                {
-                    case VectorObject.Shapes.Circle:
-                        graph.DrawEllipse(pen, obj.X, obj.Y, obj.Scale_x, obj.Scale_y);
-                        break;
-                    case VectorObject.Shapes.Square:
-                        graph.DrawPolygon(pen, new Point[]
-                        {
-                            new Point(obj.X,obj.Y),
-                            new Point(obj.X+obj.Scale_x,obj.Y),
-                            new Point(obj.X+obj.Scale_x,obj.Y+obj.Scale_y),
-                            new Point(obj.X,obj.Y+obj.Scale_y)
-
-                        });
-                        break;
-                    case VectorObject.Shapes.StickMan:
-                        FigureDrawing.MakeStickMan(graph, obj.X, obj.Y, obj.Scale_x, obj.Scale_y, pen);
-                        break;
-                    case VectorObject.Shapes.Arrow_Vertical:
-                        FigureDrawing.MakeArrowVertical(graph, obj.X, obj.Y, obj.Scale_x, obj.Scale_y, pen);
-                        break;
-                    case VectorObject.Shapes.Arrow_Horizontal:
-                        FigureDrawing.MakeArrowHorizontal(graph, obj.X, obj.Y, obj.Scale_x, obj.Scale_y, pen);
-                        break;
-                }
+                obj.Create(graph, pen);
             }
         }
-        public VectorObject GetSceneObject(int id)
+        public SceneObject GetSceneObject(int id)
         {
             return sceneObjects[id];
         }
 
-        public IEnumerable<string> SceneObjectsNames
+        public List<SceneObject> SceneObjects
         {
             get
             {
-                var names = from scenobj in sceneObjects
-                            select scenobj.Name;
-                return names;
+                return sceneObjects;
             }
         }
         
-        public IEnumerable<VectorObject> GetObjectsQuery(Func<VectorObject,bool> condition)
+        public IEnumerable<SceneObject> GetObjectsQuery(Func<SceneObject,bool> condition)
         {
             return sceneObjects.Where(condition);
         }
 
-        private string Postfix(VectorObject obj)
+        private string Postfix(SceneObject obj)
         {
 
-            int query = sceneObjects.Count(p => p.Shape == obj.Shape);
+            int query = sceneObjects.Count(p => p.Name == obj.Name);
             if (query != 0)
                 return "(" + query + ")";
             else return "";

@@ -12,9 +12,9 @@ namespace RainEngine.Entities
        
         public SceneObjectListEventArgs(int ItemIndex)
         {
-            this.ItemIndex = ItemIndex;
+            this.Item = ItemIndex;
         }
-        public int ItemIndex { get; private set; }
+        public int Item { get; private set; }
 
         public Graphics Graph { get; set; }
     }
