@@ -9,28 +9,16 @@ using RainEngine.BL.Abstract;
 
 namespace RainEngine.BL
 {
+    [Serializable]
     public class EmptyObject:SceneObject
     {
-        private int x;
-        private int y;
-        private int scale_x;
-        private int scale_y;
-        private string name;
-
-        public override void Create(Graphics graphics,Pen pen)
+        public EmptyObject()
         {
 
         }
-
-
-        [Browsable(true)]
-        [ReadOnly(true)]
-        [Description("Type of object")]
-        [DisplayName("Type")]
-        [Category("Инспектор")]
-        public override SceneObject Type
+        public override void Create(Graphics graphics,Pen pen)
         {
-            get { return this; }
+
         }
 
         [Browsable(true)]
@@ -78,6 +66,11 @@ namespace RainEngine.BL
         {
             get { return name; }
             set { name = value; }
+        }
+        [Browsable(false)]
+        public override Point UpLeftCorner
+        {
+            get { return new Point(X, Y); }
         }
     }
 }

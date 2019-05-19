@@ -65,8 +65,8 @@ namespace RainEngine
             {
                 view.ClearGraphics();
                 model.UpdateGraphicsFromScene(e.Graph, ColourPen);
-                Func<SceneObject, bool> condition = (sceneobject) => (First_pos.X > sceneobject.X && First_pos.X < (sceneobject.X + sceneobject.Scale_x))
-                && (First_pos.Y > sceneobject.Y && First_pos.Y < (sceneobject.Y + sceneobject.Scale_y));
+                Func<SceneObject, bool> condition = (sceneobject) => (First_pos.X > sceneobject.UpLeftCorner.X && First_pos.X < (sceneobject.UpLeftCorner.X + Math.Abs(sceneobject.Scale_x)))
+                && (First_pos.Y > sceneobject.UpLeftCorner.Y && First_pos.Y < (sceneobject.UpLeftCorner.Y + Math.Abs(sceneobject.Scale_y)));
                 SceneObject obj = model.GetObjectsQuery(condition).LastOrDefault();
                 if (obj != null)
                 {
@@ -85,7 +85,7 @@ namespace RainEngine
         {
             e.SelectedObject.X = First_pos.X;
             e.SelectedObject.Y = First_pos.Y;
-            if (e.SelectedObject.Type is VectorObject)
+            if (e.SelectedObject is VectorObject)
             {
                 VectorObject obj= (VectorObject)e.SelectedObject;
                 model.AddNewObject(new VectorObject(obj.Name, obj.X, obj.Y, obj.Scale_x, obj.Scale_y, obj.Shape));

@@ -9,13 +9,10 @@ using RainEngine.BL.Abstract;
 
 namespace RainEngine.BL
 {
+    [Serializable]
     public class VectorObject : SceneObject
     {
-        private int x;
-        private int y;
-        private int scale_x;
-        private int scale_y;
-        private string name;
+        
         private Shapes shape;
 
         public enum Shapes
@@ -27,6 +24,33 @@ namespace RainEngine.BL
             Arrow_Horizontal
         }
 
+        private void ChangeUpLeftCorner()
+        {
+            if (scale_y < 0 && scale_x < 0)
+            {
+                upLeftCorner.X = x + scale_x;
+                upLeftCorner.Y = y + scale_y;
+            }
+            else if (scale_y < 0 && scale_x > 0)
+            {
+                upLeftCorner.X = x;
+                upLeftCorner.Y = y + scale_y;
+            }
+            else if (scale_y > 0 && scale_x < 0)
+            {
+                upLeftCorner.X = x + scale_x;
+                upLeftCorner.Y = y;
+            }
+            else
+            {
+                upLeftCorner.X = x;
+                upLeftCorner.Y = y;
+            }
+        }
+        public VectorObject()
+        {
+
+        }
         public VectorObject(string name,int x, int y, int scale_x, int scale_y, Shapes shape)
         {
             this.name = name;
@@ -35,6 +59,7 @@ namespace RainEngine.BL
             this.y = y;
             this.scale_x = scale_x;
             this.scale_y = scale_y;
+            ChangeUpLeftCorner();
         }
         public override void Create(Graphics graphics,Pen pen)
         {
@@ -66,16 +91,6 @@ namespace RainEngine.BL
         }
 
         [Browsable(true)]
-        [ReadOnly(true)]
-        [Description("Type of object")]
-        [DisplayName("Type")]
-        [Category("Инспектор")]
-        public override SceneObject Type
-        {
-            get { return this; }
-        }
-
-        [Browsable(true)]
         [Description("Shape of object")]
         [DisplayName("Shape")]
         [Category("Инспектор")]
@@ -92,7 +107,11 @@ namespace RainEngine.BL
         public override int X
         {
             get { return x; }
-            set { x = value; }
+            set
+            {
+                x = value;
+                ChangeUpLeftCorner();
+            }
         }
         [Browsable(true)]
         [Description("Y coordinate of object")]
@@ -101,7 +120,11 @@ namespace RainEngine.BL
         public override int Y
         {
             get { return y; }
-            set { y = value; }
+            set
+            {
+                y = value;
+                ChangeUpLeftCorner();
+            }
         }
 
         [Browsable(true)]
@@ -111,7 +134,11 @@ namespace RainEngine.BL
         public override int Scale_x
         {
             get { return scale_x; }
-            set { scale_x = value; }
+            set
+            {
+                scale_x = value;
+                ChangeUpLeftCorner();
+            }
         }
         [Browsable(true)]
         [Description("Y scale of object")]
@@ -120,7 +147,11 @@ namespace RainEngine.BL
         public override int Scale_y
         {
             get { return scale_y; }
-            set { scale_y = value; }
+            set
+            {
+                scale_y = value;
+                ChangeUpLeftCorner();
+            }
         }
         [Browsable(true)]
         [Description("Name of object")]
@@ -130,6 +161,11 @@ namespace RainEngine.BL
         {
             get { return name; }
             set { name = value; }
+        }
+        [Browsable(false)]
+        public override Point UpLeftCorner
+        {
+            get {return upLeftCorner; }
         }
 
     }

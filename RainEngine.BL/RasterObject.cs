@@ -9,14 +9,13 @@ using RainEngine.BL.Abstract;
 
 namespace RainEngine.BL
 {
+    [Serializable]
     public class RasterObject : SceneObject
     {
-        private int x;
-        private int y;
-        private int scale_x;
-        private int scale_y;
-        private string name;
-
+        public RasterObject()
+        {
+           
+        }
         public RasterObject(int x, int y, int scale_x, int scale_y)
         {
             this.x = x;
@@ -29,17 +28,7 @@ namespace RainEngine.BL
         {
 
         }
-
-        [Browsable(true)]
-        [ReadOnly(true)]
-        [Description("Type of object")]
-        [DisplayName("Type")]
-        [Category("Инспектор")]
-        public override SceneObject Type
-        {
-            get { return this; }
-        }
-
+    
         [Browsable(true)]
         [Description("X coordinate of object")]
         [DisplayName("X")]
@@ -85,6 +74,11 @@ namespace RainEngine.BL
         {
             get { return name; }
             set { name = value; }
+        }
+        [Browsable(false)]
+        public override Point UpLeftCorner
+        {
+            get { return new Point(X,Y); }
         }
     }
 }
