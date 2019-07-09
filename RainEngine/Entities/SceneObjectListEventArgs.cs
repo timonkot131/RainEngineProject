@@ -4,17 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using RainEngine.BL;
+using RainEngine.BL.Abstract;
 
 namespace RainEngine.Entities
 {
-    public class SceneObjectListEventArgs:EventArgs
-    {
-       
-        public SceneObjectListEventArgs(int ItemIndex)
-        {
-            this.Item = ItemIndex;
-        }
-        public int Item { get; private set; }
+	public class SceneObjectListEventArgs : EventArgs
+	{
+		public SceneObjectListEventArgs(int itemIndex)
+		{
+			Item = itemIndex;
+			SceneObject = new EmptyObject();
+		}
+		public SceneObjectListEventArgs(SceneObject sceneObject)
+		{
+			Item = 0;
+			SceneObject = sceneObject;
+		}
+
+		public int Item { get; set; }
+
+		public SceneObject SceneObject { get;set; }
 
         public Graphics Graph { get; set; }
     }

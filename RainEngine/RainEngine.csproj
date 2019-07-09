@@ -51,9 +51,16 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IMouseInteractionFactory.cs" />
     <Compile Include="Abstract\IView.cs" />
     <Compile Include="Entities\EditorEventArgs.cs" />
     <Compile Include="Entities\SceneObjectListEventArgs.cs" />
+    <Compile Include="InteractionFabrics\CreateObjInter.cs" />
+    <Compile Include="InteractionFabrics\DefaultInter.cs" />
+    <Compile Include="InteractionFabrics\SizeDiagInter.cs" />
+    <Compile Include="InteractionFabrics\SizeHorizontalInter.cs" />
+    <Compile Include="InteractionFabrics\SizeVerticalInter.cs" />
+    <Compile Include="InteractionFabrics\TransformObjtInter.cs" />
     <Compile Include="RainPresenter.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

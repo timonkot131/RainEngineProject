@@ -7,151 +7,237 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RainEngine.Abstract;
 using RainEngine.Entities;
+using RainEngine.InteractionFabrics;
 using RainEngine.BL;
 using RainEngine.BL.Abstract;
 
 
 namespace RainEngine
 {
-    class RainPresenter
-    {
-        Point First_pos;
-        Point Current_pos;
-        Pen ColourPen = new Pen(Color.Black, 3);
+	class RainPresenter
+	{
+		Point firstPos;
+		Point currentPos;
+		Pen colourPen = new Pen(Color.Black, 3);
+		IMouseInteractionFactory mouseInteraction;
 
+		IMouseInteractionFactory[] interactions = new IMouseInteractionFactory[]
+		{
+			new DefaultInter(),
+			new SizeHorizontalInter(),
+			new SizeVerticalInter(),
+			new SizeDiagInter(),
+			new TransformObjtInter(),
+			new CreateObjInter()
+		};
 
-        List<SceneObject> scenabs = new List<SceneObject>()
-        {
-            new VectorObject("Circle",0,0,100,100,VectorObject.Shapes.Circle),
-            new VectorObject("Square",0,0,100,100,VectorObject.Shapes.Square),
-            new VectorObject("StickMan",0,0,100,100,VectorObject.Shapes.StickMan),
-            new VectorObject("Arrow_Vertical",0,0,100,100,VectorObject.Shapes.Arrow_Vertical),
-            new VectorObject("Arrow_Horizontal",0,0,100,100,VectorObject.Shapes.Arrow_Horizontal)
-        };
-        Bitmap[] scenabimgs = new Bitmap[]
-        {
-            new Bitmap("imgs/Circle.png"),
-            new Bitmap("imgs/Square.png"),
-            new Bitmap("imgs/StickMan.png"),
-            new Bitmap("imgs/Arrow_Up.png"),
-            new Bitmap("imgs/Arrow_Right.png"),
-        };
+		List<SceneObject> scenabs = new List<SceneObject>()
+		{
+			new VectorObject("Circle",0,0,100,100,VectorObject.Shapes.Circle),
+			new VectorObject("Square",0,0,100,100,VectorObject.Shapes.Square),
+			new VectorObject("StickMan",0,0,100,100,VectorObject.Shapes.StickMan),
+			new VectorObject("Arrow_Vertical",0,0,100,100,VectorObject.Shapes.Arrow_Vertical),
+			new VectorObject("Arrow_Horizontal",0,0,100,100,VectorObject.Shapes.Arrow_Horizontal)
+		};
 
+		Bitmap[] scenabimgs = new Bitmap[]
+		{
+			new Bitmap("imgs/Circle.png"),
+			new Bitmap("imgs/Square.png"),
+			new Bitmap("imgs/StickMan.png"),
+			new Bitmap("imgs/Arrow_Up.png"),
+			new Bitmap("imgs/Arrow_Right.png")
+		};
 
-        private IView view;
-        private IScene model;
-        public RainPresenter(IScene model,IView view)
-        {
-            this.model = model;
-            this.view = view;
-            this.view.MouseDownEvent += view_MouseDownEvent;
-            this.view.MouseUpEvent += view_MouseUpEvent;
-            this.view.MouseMoveEvent += view_MouseMoveEvent;
-            this.view.ClearClick += view_ClearClick;
-            this.view.OpenFromXMLClick += view_OpenFromXMLClick;
-            this.view.SaveToXMLClick += view_SaveToXMLClick;
-            this.view.SelectedIndexChanged += view_SelectedIndexChanged;
-            this.view.PropertyValueChanged += view_PropertyValueChanged;
-            this.view.UpdateScenabsData(scenabs, scenabimgs);
-        }
+		private IView view;
+		private IScene model;
+		public RainPresenter(IScene model, IView view)
+		{
+			this.model = model;
+			this.view = view;
+			this.view.MouseDownEvent += view_MouseDownEvent;
+			this.view.MouseUpEvent += view_MouseUpEvent;
+			this.view.MouseMoveEvent += view_MouseMoveEvent;
+			this.view.PressedMouseMoveEvent += view_PressedMouseMoveEvent;
+			this.view.ClearClick += view_ClearClick;
+			this.view.OpenFromXMLClick += view_OpenFromXMLClick;
+			this.view.SaveToXMLClick += view_SaveToXMLClick;
+			this.view.ListBoxSelectedIndexChanged += view_ListBoxSelectedIndexChanged;
+			this.view.ListViewSelectedIndexChanged += view_ListViewSelectedIndexChanged;
+			this.view.PropertyValueChanged += view_PropertyValueChanged;
+			this.view.UpdateScenabsData(scenabs, scenabimgs);
+			mouseInteraction = interactions[0];
+		}
 
-        private void view_MouseDownEvent(object sender, EditorEventArgs e)
-        {
-            First_pos.X = e.X;
-            First_pos.Y = e.Y;
-            Current_pos.X = e.X;
-            Current_pos.Y = e.Y;
-            if (e.IndeciesCount == 0)
-            {
-                view.ClearGraphics();
-                model.UpdateGraphicsFromScene(e.Graph, ColourPen);
-                Func<SceneObject, bool> condition = (sceneobject) => (First_pos.X > sceneobject.UpLeftCorner.X && First_pos.X < (sceneobject.UpLeftCorner.X + Math.Abs(sceneobject.Scale_x)))
-                && (First_pos.Y > sceneobject.UpLeftCorner.Y && First_pos.Y < (sceneobject.UpLeftCorner.Y + Math.Abs(sceneobject.Scale_y)));
-                SceneObject obj = model.GetObjectsQuery(condition).LastOrDefault();
-                if (obj != null)
-                {
-                    e.Graph.DrawPolygon(new Pen(Color.Green), new Point[]
-                    {
-                            new Point(obj.X,obj.Y),
-                            new Point(obj.X+obj.Scale_x,obj.Y),
-                            new Point(obj.X+obj.Scale_x,obj.Y+obj.Scale_y),
-                            new Point(obj.X,obj.Y+obj.Scale_y)
-                    });
-                    view.PropertyGrid.SelectedObject = obj;
-                }
-            }
-        }
-        private void view_MouseUpEvent(object sender, EditorEventArgs e)
-        {
-            e.SelectedObject.X = First_pos.X;
-            e.SelectedObject.Y = First_pos.Y;
-            if (e.SelectedObject is VectorObject)
-            {
-                VectorObject obj= (VectorObject)e.SelectedObject;
-                model.AddNewObject(new VectorObject(obj.Name, obj.X, obj.Y, obj.Scale_x, obj.Scale_y, obj.Shape));
-            }
-            model.UpdateGraphicsFromScene(e.Graph, ColourPen);
-            view.UpdateSceneObjectsData(model.SceneObjects);
-        }
-        private void view_MouseMoveEvent(object sender, EditorEventArgs e)
-        {
-            Current_pos.X = e.X;
-            Current_pos.Y = e.Y;
-            view.ClearGraphics();
-            e.SelectedObject.X = First_pos.X;
-            e.SelectedObject.Y = First_pos.Y;
-            e.SelectedObject.Scale_x = Current_pos.X - First_pos.X;
-            e.SelectedObject.Scale_y = Current_pos.Y - First_pos.Y;
-            e.SelectedObject.Create(e.Graph, ColourPen);
-            model.UpdateGraphicsFromScene(e.Graph, ColourPen);
-        }
-        private void view_ClearClick(object sender, EditorEventArgs e)
-        {
-            model.ClearObjects();
-            view.ClearGraphics();
-            view.UpdateSceneObjectsData(model.SceneObjects);
-        }
-        private void view_SaveToXMLClick(object sender, EventArgs e)
-        {
-            
-            if (view.SaveFileDialog.ShowDialog() == DialogResult.Cancel)
-                return;
+		private void view_MouseDownEvent(object sender, EditorEventArgs e)
+		{
+			firstPos.X = e.X;
+			firstPos.Y = e.Y;
+			currentPos.X = e.X;
+			currentPos.Y = e.Y;
+			if (e.IndeciesCount == 0)
+			{
+				if (mouseInteraction is DefaultInter)
+				{
+					view.ClearGraphics();
+					model.UpdateGraphicsFromScene(e.Graph, colourPen);
+					Func<SceneObject, bool> condition = (sceneobject) => (firstPos.X > sceneobject.X && firstPos.X < (sceneobject.X + sceneobject.ScaleX))
+					&& (firstPos.Y > sceneobject.Y && firstPos.Y < (sceneobject.Y + sceneobject.ScaleY));
+					SceneObject obj = model.GetObjectsQuery(condition).LastOrDefault();
+					if (obj != null)
+					{
+						DrawGreenSquare(obj,e.Graph);
+						view.PropertyGrid.SelectedObject = obj;
+					}
+					else
+					{
+						view.PropertyGrid.SelectedObject = null;
+					}
+				}
+			}
+		}
+		private void view_MouseUpEvent(object sender, EditorEventArgs e)
+		{
+			if (e.IndeciesCount != 0)
+			{
+				SceneObject sceneObject = (SceneObject)e.ListViewItemCollection[0].Tag;
+				sceneObject.X = firstPos.X;
+				sceneObject.Y = firstPos.Y;
+				if (sceneObject is VectorObject)
+				{
+					VectorObject obj = (VectorObject)sceneObject;
+					model.AddNewObject(new VectorObject(obj.Name, obj.X, obj.Y, obj.ScaleX, obj.ScaleY, obj.Shape));
+				}
+			}
+			else
+			{
+				mouseInteraction = interactions[0];
+			}
+			model.UpdateGraphicsFromScene(e.Graph, colourPen);
+			view.UpdateSceneObjectsData(model.SceneObjects);
+		}
+		private void view_MouseMoveEvent(object sender, EditorEventArgs e)
+		{
+			const int xOffset = 10;
+			const int yOffset = 10;
 
-            string filename = view.SaveFileDialog.FileName;
-            model.SaveXmlFile(filename);
-        }
-        private void view_OpenFromXMLClick(object sender, EditorEventArgs e)
-        {
-            if (view.OpenFileDialog.ShowDialog() == DialogResult.Cancel)
-                return;
+			if (e.X >= e.SceneObject.X - xOffset && e.X <= e.SceneObject.X + xOffset
+			&& e.Y >= e.SceneObject.Y - yOffset && e.Y <= e.SceneObject.Y + yOffset)
+			{
+				mouseInteraction = interactions[4];
+				view.ChangeCursor(Cursors.SizeAll);
+			}
+			else if(e.X >= e.SceneObject.X + e.SceneObject.ScaleX - xOffset && e.X <= e.SceneObject.X + e.SceneObject.ScaleX + xOffset
+			&& e.Y >= e.SceneObject.Y + e.SceneObject.ScaleY - yOffset && e.Y <= e.SceneObject.Y + e.SceneObject.ScaleY + yOffset)
+			{
+				mouseInteraction = interactions[3];
+				view.ChangeCursor(Cursors.SizeNWSE);
+			}
+			else if(e.X >= e.SceneObject.X + e.SceneObject.ScaleX - xOffset && e.X <= e.SceneObject.X + e.SceneObject.ScaleX + xOffset
+			&& e.Y >= e.SceneObject.Y - yOffset && e.Y <= e.SceneObject.Y + e.SceneObject.ScaleY + yOffset)
+			{
+				mouseInteraction = interactions[1];
+				view.ChangeCursor(Cursors.SizeWE);
+			}
+			else if(e.Y >= e.SceneObject.Y + e.SceneObject.ScaleY - yOffset && e.Y <= e.SceneObject.Y + e.SceneObject.ScaleY + yOffset
+			&& e.X >= e.SceneObject.X - xOffset && e.X <= e.SceneObject.X + e.SceneObject.ScaleX + xOffset)
+			{
+				mouseInteraction = interactions[2];
+				view.ChangeCursor(Cursors.SizeNS);
+			}
+			else
+			{
+				mouseInteraction = interactions[0];
+			}
+			
+		}
+		private void view_PressedMouseMoveEvent(object sender, EditorEventArgs e)
+		{
+			currentPos.X = e.X;
+			currentPos.Y = e.Y;
+			view.ClearGraphics();
+			mouseInteraction.Interact(view, new Point(e.X, e.Y), e.SceneObject, firstPos);
+			if(mouseInteraction is CreateObjInter)
+			{
+				e.SceneObject.Create(e.Graph, colourPen);
+			}
+			if (e.SceneObject != null)
+			{
+				DrawGreenSquare(e.SceneObject, e.Graph);
+			}
+			model.UpdateGraphicsFromScene(e.Graph, colourPen);
+		}
+		private void view_ClearClick(object sender, EditorEventArgs e)
+		{
+			model.ClearObjects();
+			view.ClearGraphics();
+			view.UpdateSceneObjectsData(model.SceneObjects);
+		}
+		private void view_SaveToXMLClick(object sender, EventArgs e)
+		{
 
-            string filename = view.OpenFileDialog.FileName;
-            model.ClearObjects();
-            view.ClearGraphics();
-            model.LoadXmlFile(filename);
-            model.UpdateGraphicsFromScene(e.Graph, ColourPen);
-            view.UpdateSceneObjectsData(model.SceneObjects);
-        }
+			if (view.SaveFileDialog.ShowDialog() == DialogResult.Cancel)
+				return;
 
-        private void view_SelectedIndexChanged(object sender, SceneObjectListEventArgs e)
-        {
-            view.ClearGraphics();
-            model.UpdateGraphicsFromScene(e.Graph, ColourPen);
-            SceneObject obj = model.GetSceneObject(e.Item);
-            view.PropertyGrid.SelectedObject = obj;
-            e.Graph.DrawPolygon(new Pen(Color.Green), new Point[]
-                {
-                            new Point(obj.X,obj.Y),
-                            new Point(obj.X+obj.Scale_x,obj.Y),
-                            new Point(obj.X+obj.Scale_x,obj.Y+obj.Scale_y),
-                            new Point(obj.X,obj.Y+obj.Scale_y)
-            });  
-        }
-        private void view_PropertyValueChanged(object sender, EditorEventArgs e)
-        {
-            view.ClearGraphics();
-            model.UpdateGraphicsFromScene(e.Graph, ColourPen);
-            view.UpdateSceneObjectsData(model.SceneObjects);
-        }
-    }
+			string filename = view.SaveFileDialog.FileName;
+			model.SaveXmlFile(filename);
+		}
+		private void view_OpenFromXMLClick(object sender, EditorEventArgs e)
+		{
+			if (view.OpenFileDialog.ShowDialog() == DialogResult.Cancel)
+				return;
+
+			string filename = view.OpenFileDialog.FileName;
+			model.ClearObjects();
+			view.ClearGraphics();
+			model.LoadXmlFile(filename);
+			model.UpdateGraphicsFromScene(e.Graph, colourPen);
+			view.UpdateSceneObjectsData(model.SceneObjects);
+		}
+
+		private void view_ListBoxSelectedIndexChanged(object sender, SceneObjectListEventArgs e)
+		{
+			view.ClearGraphics();
+			model.UpdateGraphicsFromScene(e.Graph, colourPen);
+			SceneObject obj = model.GetSceneObject(e.Item);
+			view.PropertyGrid.SelectedObject = obj;
+			e.Graph.DrawPolygon(new Pen(Color.Green), new Point[]
+				{
+							new Point(obj.X,obj.Y),
+							new Point(obj.X+obj.ScaleX,obj.Y),
+							new Point(obj.X+obj.ScaleX,obj.Y+obj.ScaleY),
+							new Point(obj.X,obj.Y+obj.ScaleY)
+			});
+		}
+		private void view_ListViewSelectedIndexChanged(object sender, SceneObjectListEventArgs e)
+		{
+			view.PropertyGrid.SelectedObject = null;
+			if (e.Item != 0)
+			{
+				mouseInteraction = interactions[5];
+				view.ChangeCursor(Cursors.Cross);
+			}
+			else
+			{
+				mouseInteraction = interactions[0];
+				view.ChangeCursor(Cursors.Default);
+			}
+		}
+		private void view_PropertyValueChanged(object sender, EditorEventArgs e)
+		{
+			view.ClearGraphics();
+			model.UpdateGraphicsFromScene(e.Graph, colourPen);
+			view.UpdateSceneObjectsData(model.SceneObjects);
+		}
+		private void DrawGreenSquare(SceneObject obj, Graphics graph)
+		{
+			graph.DrawPolygon(new Pen(Color.Green), new Point[]
+						{
+							new Point(obj.X,obj.Y),
+							new Point(obj.X+obj.ScaleX,obj.Y),
+							new Point(obj.X+obj.ScaleX,obj.Y+obj.ScaleY),
+							new Point(obj.X,obj.Y+obj.ScaleY)
+						});
+		}
+	}
 }

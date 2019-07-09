@@ -20,8 +20,8 @@ namespace RainEngine.BL
         {
             this.x = x;
             this.y = y;
-            this.scale_x = scale_x;
-            this.scale_y = scale_y;
+            this.scaleX = scale_x;
+            this.scaleY = scale_y;
         }
 
         public override void Create(Graphics graphics, Pen pen)
@@ -52,19 +52,19 @@ namespace RainEngine.BL
         [Description("X scale of object")]
         [DisplayName("Scale_x")]
         [Category("Инспектор")]
-        public override int Scale_x
+        public override int ScaleX
         {
-            get { return scale_x; }
-            set { scale_x = value; }
+            get { return scaleX; }
+            set { scaleX = value; }
         }
         [Browsable(true)]
         [Description("Y scale of object")]
         [DisplayName("Scale_y")]
         [Category("Инспектор")]
-        public override int Scale_y
+        public override int ScaleY
         {
-            get { return scale_y; }
-            set { scale_y = value; }
+            get { return scaleY; }
+            set { scaleY = value; }
         }
         [Browsable(true)]
         [Description("Name of object")]

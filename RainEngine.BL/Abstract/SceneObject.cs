@@ -16,8 +16,8 @@ namespace RainEngine.BL.Abstract
     {
         protected int x;
         protected int y;
-        protected int scale_x;
-        protected int scale_y;
+        protected int scaleX;
+        protected int scaleY;
         protected string name;
         protected Point upLeftCorner;
         public abstract void Create(Graphics graphics, Pen pen);
@@ -35,13 +35,13 @@ namespace RainEngine.BL.Abstract
         }
 
 
-        public abstract int Scale_x
+        public abstract int ScaleX
         {
             get;
             set;
         }
 
-        public abstract int Scale_y
+        public abstract int ScaleY
         {
             get;
             set;

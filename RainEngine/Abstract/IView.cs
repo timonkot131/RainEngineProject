@@ -10,35 +10,41 @@ using RainEngine.Entities;
 
 namespace RainEngine.Abstract
 {
-    interface IView
-    {
-        OpenFileDialog OpenFileDialog { get; set; }
+	public interface IView
+	{
+		OpenFileDialog OpenFileDialog { get; set; }
 
-        SaveFileDialog SaveFileDialog { get; set; }
+		SaveFileDialog SaveFileDialog { get; set; }
 
-        PropertyGrid PropertyGrid { get; set; }        
+		PropertyGrid PropertyGrid { get; set; }
 
-        void UpdateScenabsData(List<SceneObject> scenabs, Bitmap[] scenabimgs);
+		void UpdateScenabsData(List<SceneObject> scenabs, Bitmap[] scenabimgs);
 
-        void UpdateSceneObjectsData(List<SceneObject> SceneObjs);
+		void UpdateSceneObjectsData(List<SceneObject> SceneObjs);
 
-        void ClearGraphics();
+		void ClearGraphics();
 
-        event EventHandler<EditorEventArgs> MouseDownEvent;
+		void ChangeCursor(Cursor cursor);
 
-        event EventHandler<EditorEventArgs> MouseUpEvent;
+		event EventHandler<EditorEventArgs> MouseDownEvent;
 
-        event EventHandler<EditorEventArgs> MouseMoveEvent;
+		event EventHandler<EditorEventArgs> MouseUpEvent;
 
-        event EventHandler<EditorEventArgs> ClearClick;
+		event EventHandler<EditorEventArgs> PressedMouseMoveEvent;
 
-        event EventHandler<EventArgs> SaveToXMLClick;
+		event EventHandler<EditorEventArgs> MouseMoveEvent;
 
-        event EventHandler<EditorEventArgs> OpenFromXMLClick;
+		event EventHandler<EditorEventArgs> ClearClick;
 
-        event EventHandler<SceneObjectListEventArgs> SelectedIndexChanged;
+		event EventHandler<EventArgs> SaveToXMLClick;
 
-        event EventHandler<EditorEventArgs> PropertyValueChanged;
-    }
+		event EventHandler<EditorEventArgs> OpenFromXMLClick;
+
+		event EventHandler<SceneObjectListEventArgs> ListBoxSelectedIndexChanged;
+
+		event EventHandler<SceneObjectListEventArgs> ListViewSelectedIndexChanged;
+
+		event EventHandler<EditorEventArgs> PropertyValueChanged;
+	}
 }
 
