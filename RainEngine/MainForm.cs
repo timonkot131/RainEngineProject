@@ -16,11 +16,17 @@ namespace RainEngine
 	{
 		Graphics graph;
 
+		private List<BL.Abstract.SceneObject> sceneObjects = new List<BL.Abstract.SceneObject>();
+
 		public OpenFileDialog OpenFileDialog { get; set; }
 
 		public SaveFileDialog SaveFileDialog { get; set; }
 
 		public PropertyGrid PropertyGrid { get; set; }
+
+		public ContextMenuStrip ContextMenuStrip { get; set; }
+
+		public TextBox SearchTextBox { get; set; }
 
 		public MainForm()
 		{
@@ -28,6 +34,8 @@ namespace RainEngine
 			OpenFileDialog = openFileDialog1;
 			SaveFileDialog = saveFileDialog1;
 			PropertyGrid = propertyGrid1;
+			ContextMenuStrip = contextMenuStrip1;
+			SearchTextBox = searchObjectsBox;
 			graph = pictureBox1.CreateGraphics();
 		}
 
@@ -63,6 +71,7 @@ namespace RainEngine
 			{
 				listBox1.Items.Add(sceneObj);
 			}
+
 			listBox1.DisplayMember = "Name";
 		}
 
@@ -77,6 +86,30 @@ namespace RainEngine
 		}
 
 		#region Переброс событий
+
+		public event EventHandler<EditorEventArgs> DeleteClick;
+		protected virtual void OnDeleteClick(EditorEventArgs e)
+		{
+			DeleteClick?.Invoke(this, e);
+		}
+
+		public event EventHandler<EditorEventArgs> DuplicateClick;
+		protected virtual void OnDuplicateClick(EditorEventArgs e)
+		{
+			DuplicateClick?.Invoke(this, e);
+		}
+
+		public event EventHandler<MouseEventArgs> MouseUpRightClick;
+		protected virtual void OnMouseUpRightClick (MouseEventArgs e)
+		{
+			MouseUpRightClick?.Invoke(this, e);
+		}
+
+		public event EventHandler<EventArgs> OpenProjectClick;
+		protected virtual void OnOpenProjectClick (EventArgs e)
+		{
+			OpenProjectClick?.Invoke(this, e);
+		}
 
 		public event EventHandler<EditorEventArgs> MouseDownEvent;
 		protected virtual void OnMouseDownEvent(EditorEventArgs e)
@@ -201,6 +234,30 @@ namespace RainEngine
 		private void ListView1_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			OnListViewSelectedIndexChanged(new SceneObjectListEventArgs(listView1.SelectedItems.Count));
+		}
+
+		private void OpenProjectButton_Click(object sender, EventArgs e)
+		{
+			OnOpenProjectClick(e);
+		}
+
+		private void Form_MouseClick(object sender, MouseEventArgs e)
+		{
+			if(e.Button == MouseButtons.Right)
+			{
+				OnMouseUpRightClick(e);
+			}
+			
+		}
+
+		private void УдалитьToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			OnDeleteClick(new EditorEventArgs(graph));
+		}
+
+		private void ДублироватьToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			OnDuplicateClick(new EditorEventArgs(graph));
 		}
 	}
 }

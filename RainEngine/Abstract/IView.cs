@@ -18,6 +18,10 @@ namespace RainEngine.Abstract
 
 		PropertyGrid PropertyGrid { get; set; }
 
+		ContextMenuStrip ContextMenuStrip { get; set; }
+
+		TextBox SearchTextBox { get; set; }
+
 		void UpdateScenabsData(List<SceneObject> scenabs, Bitmap[] scenabimgs);
 
 		void UpdateSceneObjectsData(List<SceneObject> SceneObjs);
@@ -25,6 +29,8 @@ namespace RainEngine.Abstract
 		void ClearGraphics();
 
 		void ChangeCursor(Cursor cursor);
+
+		event EventHandler<EventArgs> OpenProjectClick;
 
 		event EventHandler<EditorEventArgs> MouseDownEvent;
 
@@ -43,6 +49,12 @@ namespace RainEngine.Abstract
 		event EventHandler<SceneObjectListEventArgs> ListBoxSelectedIndexChanged;
 
 		event EventHandler<SceneObjectListEventArgs> ListViewSelectedIndexChanged;
+
+		event EventHandler<MouseEventArgs> MouseUpRightClick;
+
+		event EventHandler<EditorEventArgs> DuplicateClick;
+
+		event EventHandler<EditorEventArgs> DeleteClick;
 
 		event EventHandler<EditorEventArgs> PropertyValueChanged;
 	}

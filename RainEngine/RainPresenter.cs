@@ -10,6 +10,7 @@ using RainEngine.Entities;
 using RainEngine.InteractionFabrics;
 using RainEngine.BL;
 using RainEngine.BL.Abstract;
+using System.Text.RegularExpressions;
 
 
 namespace RainEngine
@@ -39,15 +40,9 @@ namespace RainEngine
 			new VectorObject("Arrow_Vertical",0,0,100,100,VectorObject.Shapes.Arrow_Vertical),
 			new VectorObject("Arrow_Horizontal",0,0,100,100,VectorObject.Shapes.Arrow_Horizontal)
 		};
+		Bitmap emptyImage = new Bitmap(50, 50);
 
-		Bitmap[] scenabimgs = new Bitmap[]
-		{
-			new Bitmap("imgs/Circle.png"),
-			new Bitmap("imgs/Square.png"),
-			new Bitmap("imgs/StickMan.png"),
-			new Bitmap("imgs/Arrow_Up.png"),
-			new Bitmap("imgs/Arrow_Right.png")
-		};
+		Bitmap[] scenabimgs = new Bitmap[4];
 
 		private IView view;
 		private IScene model;
@@ -65,6 +60,22 @@ namespace RainEngine
 			this.view.ListBoxSelectedIndexChanged += view_ListBoxSelectedIndexChanged;
 			this.view.ListViewSelectedIndexChanged += view_ListViewSelectedIndexChanged;
 			this.view.PropertyValueChanged += view_PropertyValueChanged;
+			this.view.OpenProjectClick += view_OpenProjectClick;
+			this.view.MouseUpRightClick += view_MouseUpRightClick;
+			this.view.DeleteClick += view_DeleteObjectClick;
+			this.view.DuplicateClick += view_DuplicateObjectClick;
+			this.view.SearchTextBox.TextChanged += view_SearchBoxTextChanged;
+
+			using (Graphics gr = Graphics.FromImage(emptyImage))
+			{
+				gr.Clear(Color.White);
+			}
+
+			for(int i = 0; i<scenabimgs.Length;i++)
+			{
+				scenabimgs[i]=emptyImage;
+			}
+
 			this.view.UpdateScenabsData(scenabs, scenabimgs);
 			mouseInteraction = interactions[0];
 		}
@@ -103,19 +114,66 @@ namespace RainEngine
 				SceneObject sceneObject = (SceneObject)e.ListViewItemCollection[0].Tag;
 				sceneObject.X = firstPos.X;
 				sceneObject.Y = firstPos.Y;
+
 				if (sceneObject is VectorObject)
 				{
 					VectorObject obj = (VectorObject)sceneObject;
-					model.AddNewObject(new VectorObject(obj.Name, obj.X, obj.Y, obj.ScaleX, obj.ScaleY, obj.Shape));
+					model.AddNewObject(new VectorObject(GetUnicalName(obj.Name), obj.X, obj.Y, obj.ScaleX, obj.ScaleY, obj.Shape));
 				}
 			}
 			else
 			{
 				mouseInteraction = interactions[0];
 			}
+
 			model.UpdateGraphicsFromScene(e.Graph, colourPen);
 			view.UpdateSceneObjectsData(model.SceneObjects);
 		}
+
+		private string GetUnicalName(string firstPartName)
+		{
+			Regex regex = new Regex(@"\d+$");
+			Regex regex1 = new Regex(@"^[a-zA-Z_]+");
+
+			if (model.SceneObjects.Count == 0)
+			{
+				return firstPartName;
+			}
+
+			var isNotMatches = model.SceneObjects
+				.Select(x => x.Name)
+				.Where(x => regex1.Match(x).Value == firstPartName)
+				.Count()
+				.Equals(0);
+
+			if (isNotMatches)
+			{
+				return firstPartName;
+			}
+
+			var matchedElems = model.SceneObjects
+				.Select(x => x.Name)
+				.Where(x => regex.Match(x).Success && regex1.Match(x).Value == firstPartName);
+
+			long maxValueInScene = 0;
+
+			if (matchedElems.Count() != 0)
+			{
+				maxValueInScene = matchedElems
+					.Select(x => Convert.ToInt64(regex.Match(x).Value))
+					.Max();
+			}
+
+			if(maxValueInScene == 0)
+			{
+				return firstPartName + 1;
+			}
+
+			maxValueInScene++;
+			string result = firstPartName + maxValueInScene;
+			return result;
+		}
+
 		private void view_MouseMoveEvent(object sender, EditorEventArgs e)
 		{
 			const int xOffset = 10;
@@ -149,7 +207,6 @@ namespace RainEngine
 			{
 				mouseInteraction = interactions[0];
 			}
-			
 		}
 		private void view_PressedMouseMoveEvent(object sender, EditorEventArgs e)
 		{
@@ -238,6 +295,38 @@ namespace RainEngine
 							new Point(obj.X+obj.ScaleX,obj.Y+obj.ScaleY),
 							new Point(obj.X,obj.Y+obj.ScaleY)
 						});
+		}
+
+		private void view_OpenProjectClick(object sender, EventArgs e)
+		{
+			
+		}
+
+		private void view_MouseUpRightClick(object sender, MouseEventArgs e)
+		{
+			view.ContextMenuStrip.Show(e.Location);
+		}
+
+		private void view_DeleteObjectClick(object sender, EditorEventArgs e)
+		{
+			if(view.PropertyGrid.SelectedObject != null)
+			{
+				model.SceneObjects.Remove((SceneObject)view.PropertyGrid.SelectedObject);
+				view.ClearGraphics();
+				model.UpdateGraphicsFromScene(e.Graph, colourPen);
+				view.UpdateSceneObjectsData(model.SceneObjects);
+			}
+		}
+
+		private void view_DuplicateObjectClick(object sender, EditorEventArgs e)
+		{
+
+		}
+
+		private void view_SearchBoxTextChanged(object sender, EventArgs e)
+		{
+			var sceneObjects = model.SceneObjects.Where(x => x.Name.Contains(view.SearchTextBox.Text)).ToList();
+			view.UpdateSceneObjectsData(sceneObjects);
 		}
 	}
 }
