@@ -11,6 +11,7 @@ using RainEngine.InteractionFabrics;
 using RainEngine.BL;
 using RainEngine.BL.Abstract;
 using System.Text.RegularExpressions;
+using RainEngineGame;
 
 
 namespace RainEngine
@@ -299,7 +300,7 @@ namespace RainEngine
 
 		private void view_OpenProjectClick(object sender, EventArgs e)
 		{
-			
+			Form form = new RainEngineGame.GameForm();
 		}
 
 		private void view_MouseUpRightClick(object sender, MouseEventArgs e)
@@ -320,7 +321,6 @@ namespace RainEngine
 
 		private void view_DuplicateObjectClick(object sender, EditorEventArgs e)
 		{
-
 		}
 
 		private void view_SearchBoxTextChanged(object sender, EventArgs e)

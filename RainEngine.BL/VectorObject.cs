@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RainEngine.BL.Abstract;
+using RainEngine.BL.Components;
 
 namespace RainEngine.BL
 {
@@ -63,6 +64,10 @@ namespace RainEngine.BL
 			this.y = y;
 			this.scaleX = scaleX;
 			this.scaleY = scaleY;
+			Script script1 = new Script("ShittyScript");
+			Script script2 = new Script("AnotherShittyScript");
+			Components.Add(script1.Name, script1);
+			Components.Add(script2.Name, script2);
 			ChangeUpLeftCorner();
 		}
 		public override void Create(Graphics graphics, Pen pen)

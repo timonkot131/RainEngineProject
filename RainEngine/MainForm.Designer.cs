@@ -41,8 +41,11 @@
 			this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
 			this.searchObjectsBox = new System.Windows.Forms.TextBox();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+			this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+			this.открытьПроектToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.сохранитьПроектToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.новыйПроектToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.openProjectButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
 			this.OpenFromXML = new System.Windows.Forms.ToolStripButton();
 			this.SaveToXML = new System.Windows.Forms.ToolStripButton();
@@ -53,10 +56,10 @@
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.дублироватьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-			this.открытьПроектToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.сохранитьПроектToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.новыйПроектToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			this.addComponentButton = new System.Windows.Forms.Button();
+			this.removeComponentButton = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -68,6 +71,11 @@
 			this.splitContainer2.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.contextMenuStrip1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
+			this.splitContainer3.Panel1.SuspendLayout();
+			this.splitContainer3.Panel2.SuspendLayout();
+			this.splitContainer3.SuspendLayout();
+			this.flowLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pictureBox1
@@ -87,14 +95,15 @@
 			// 
 			// listBox1
 			// 
-			this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.listBox1.FormattingEnabled = true;
 			this.listBox1.HorizontalScrollbar = true;
-			this.listBox1.Location = new System.Drawing.Point(11, 37);
+			this.listBox1.Location = new System.Drawing.Point(5, 26);
 			this.listBox1.Margin = new System.Windows.Forms.Padding(2);
 			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(163, 238);
+			this.listBox1.Size = new System.Drawing.Size(212, 173);
 			this.listBox1.TabIndex = 1;
 			this.listBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form_MouseClick);
 			this.listBox1.SelectedIndexChanged += new System.EventHandler(this.ListBox1_SelectedIndexChanged);
@@ -115,11 +124,9 @@
 			// 
 			// splitContainer1.Panel2
 			// 
-			this.splitContainer1.Panel2.Controls.Add(this.propertyGrid1);
-			this.splitContainer1.Panel2.Controls.Add(this.searchObjectsBox);
-			this.splitContainer1.Panel2.Controls.Add(this.listBox1);
-			this.splitContainer1.Size = new System.Drawing.Size(838, 483);
-			this.splitContainer1.SplitterDistance = 659;
+			this.splitContainer1.Panel2.Controls.Add(this.splitContainer3);
+			this.splitContainer1.Size = new System.Drawing.Size(903, 483);
+			this.splitContainer1.SplitterDistance = 671;
 			this.splitContainer1.SplitterWidth = 3;
 			this.splitContainer1.TabIndex = 2;
 			// 
@@ -141,7 +148,7 @@
 			// splitContainer2.Panel2
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.listView1);
-			this.splitContainer2.Size = new System.Drawing.Size(653, 476);
+			this.splitContainer2.Size = new System.Drawing.Size(652, 476);
 			this.splitContainer2.SplitterDistance = 365;
 			this.splitContainer2.SplitterWidth = 3;
 			this.splitContainer2.TabIndex = 2;
@@ -162,7 +169,7 @@
 			this.listView1.Margin = new System.Windows.Forms.Padding(2);
 			this.listView1.MultiSelect = false;
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(634, 100);
+			this.listView1.Size = new System.Drawing.Size(644, 101);
 			this.listView1.TabIndex = 1;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.SelectedIndexChanged += new System.EventHandler(this.ListView1_SelectedIndexChanged);
@@ -170,13 +177,11 @@
 			// 
 			// propertyGrid1
 			// 
-			this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.propertyGrid1.Location = new System.Drawing.Point(11, 279);
+			this.propertyGrid1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.propertyGrid1.Location = new System.Drawing.Point(2, 60);
 			this.propertyGrid1.Margin = new System.Windows.Forms.Padding(2);
 			this.propertyGrid1.Name = "propertyGrid1";
-			this.propertyGrid1.Size = new System.Drawing.Size(162, 202);
+			this.propertyGrid1.Size = new System.Drawing.Size(190, 214);
 			this.propertyGrid1.TabIndex = 3;
 			this.propertyGrid1.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PropertyGrid1_PropertyValueChanged);
 			// 
@@ -184,10 +189,10 @@
 			// 
 			this.searchObjectsBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.searchObjectsBox.Location = new System.Drawing.Point(11, 14);
+			this.searchObjectsBox.Location = new System.Drawing.Point(5, 2);
 			this.searchObjectsBox.Margin = new System.Windows.Forms.Padding(2);
 			this.searchObjectsBox.Name = "searchObjectsBox";
-			this.searchObjectsBox.Size = new System.Drawing.Size(163, 20);
+			this.searchObjectsBox.Size = new System.Drawing.Size(212, 20);
 			this.searchObjectsBox.TabIndex = 2;
 			// 
 			// toolStrip1
@@ -196,7 +201,6 @@
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1,
             this.toolStripButton1,
-            this.openProjectButton,
             this.toolStripButton3,
             this.OpenFromXML,
             this.SaveToXML,
@@ -204,9 +208,41 @@
             this.toolStripButton7});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(849, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(914, 25);
 			this.toolStrip1.TabIndex = 3;
 			this.toolStrip1.Text = "toolStrip1";
+			// 
+			// toolStripDropDownButton1
+			// 
+			this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.открытьПроектToolStripMenuItem,
+            this.сохранитьПроектToolStripMenuItem,
+            this.новыйПроектToolStripMenuItem});
+			this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
+			this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+			this.toolStripDropDownButton1.Size = new System.Drawing.Size(49, 22);
+			this.toolStripDropDownButton1.Text = "Файл";
+			// 
+			// открытьПроектToolStripMenuItem
+			// 
+			this.открытьПроектToolStripMenuItem.Name = "открытьПроектToolStripMenuItem";
+			this.открытьПроектToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+			this.открытьПроектToolStripMenuItem.Text = "Открыть проект";
+			this.открытьПроектToolStripMenuItem.Click += new System.EventHandler(this.OpenProjectButton_Click);
+			// 
+			// сохранитьПроектToolStripMenuItem
+			// 
+			this.сохранитьПроектToolStripMenuItem.Name = "сохранитьПроектToolStripMenuItem";
+			this.сохранитьПроектToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+			this.сохранитьПроектToolStripMenuItem.Text = "Сохранить проект";
+			// 
+			// новыйПроектToolStripMenuItem
+			// 
+			this.новыйПроектToolStripMenuItem.Name = "новыйПроектToolStripMenuItem";
+			this.новыйПроектToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+			this.новыйПроектToolStripMenuItem.Text = "Новый проект";
 			// 
 			// toolStripButton1
 			// 
@@ -216,16 +252,6 @@
 			this.toolStripButton1.Name = "toolStripButton1";
 			this.toolStripButton1.Size = new System.Drawing.Size(42, 22);
 			this.toolStripButton1.Text = "Старт";
-			// 
-			// openProjectButton
-			// 
-			this.openProjectButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.openProjectButton.Image = ((System.Drawing.Image)(resources.GetObject("openProjectButton.Image")));
-			this.openProjectButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.openProjectButton.Name = "openProjectButton";
-			this.openProjectButton.Size = new System.Drawing.Size(99, 22);
-			this.openProjectButton.Text = "Открыть проект";
-			this.openProjectButton.Click += new System.EventHandler(this.OpenProjectButton_Click);
 			// 
 			// toolStripButton3
 			// 
@@ -309,43 +335,63 @@
 			this.дублироватьToolStripMenuItem.Text = "Дублировать";
 			this.дублироватьToolStripMenuItem.Click += new System.EventHandler(this.ДублироватьToolStripMenuItem_Click);
 			// 
-			// toolStripDropDownButton1
+			// splitContainer3
 			// 
-			this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.открытьПроектToolStripMenuItem,
-            this.сохранитьПроектToolStripMenuItem,
-            this.новыйПроектToolStripMenuItem});
-			this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
-			this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-			this.toolStripDropDownButton1.Size = new System.Drawing.Size(49, 22);
-			this.toolStripDropDownButton1.Text = "Файл";
+			this.splitContainer3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.splitContainer3.Location = new System.Drawing.Point(3, 4);
+			this.splitContainer3.Name = "splitContainer3";
+			this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
-			// открытьПроектToolStripMenuItem
+			// splitContainer3.Panel1
 			// 
-			this.открытьПроектToolStripMenuItem.Name = "открытьПроектToolStripMenuItem";
-			this.открытьПроектToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.открытьПроектToolStripMenuItem.Text = "Открыть проект";
-			this.открытьПроектToolStripMenuItem.Click += new System.EventHandler(this.OpenProjectButton_Click);
+			this.splitContainer3.Panel1.Controls.Add(this.searchObjectsBox);
+			this.splitContainer3.Panel1.Controls.Add(this.listBox1);
 			// 
-			// сохранитьПроектToolStripMenuItem
+			// splitContainer3.Panel2
 			// 
-			this.сохранитьПроектToolStripMenuItem.Name = "сохранитьПроектToolStripMenuItem";
-			this.сохранитьПроектToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.сохранитьПроектToolStripMenuItem.Text = "Сохранить проект";
+			this.splitContainer3.Panel2.Controls.Add(this.flowLayoutPanel1);
+			this.splitContainer3.Size = new System.Drawing.Size(220, 473);
+			this.splitContainer3.SplitterDistance = 206;
+			this.splitContainer3.TabIndex = 1;
 			// 
-			// новыйПроектToolStripMenuItem
+			// flowLayoutPanel1
 			// 
-			this.новыйПроектToolStripMenuItem.Name = "новыйПроектToolStripMenuItem";
-			this.новыйПроектToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.новыйПроектToolStripMenuItem.Text = "Новый проект";
+			this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.flowLayoutPanel1.AutoScroll = true;
+			this.flowLayoutPanel1.Controls.Add(this.removeComponentButton);
+			this.flowLayoutPanel1.Controls.Add(this.addComponentButton);
+			this.flowLayoutPanel1.Controls.Add(this.propertyGrid1);
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(5, 3);
+			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(215, 257);
+			this.flowLayoutPanel1.TabIndex = 4;
+			// 
+			// addComponentButton
+			// 
+			this.addComponentButton.Location = new System.Drawing.Point(3, 32);
+			this.addComponentButton.Name = "addComponentButton";
+			this.addComponentButton.Size = new System.Drawing.Size(189, 23);
+			this.addComponentButton.TabIndex = 4;
+			this.addComponentButton.Text = "Добавить компонент";
+			this.addComponentButton.UseVisualStyleBackColor = true;
+			// 
+			// removeComponentButton
+			// 
+			this.removeComponentButton.Location = new System.Drawing.Point(3, 3);
+			this.removeComponentButton.Name = "removeComponentButton";
+			this.removeComponentButton.Size = new System.Drawing.Size(189, 23);
+			this.removeComponentButton.TabIndex = 5;
+			this.removeComponentButton.Text = "Убрать компонент";
+			this.removeComponentButton.UseVisualStyleBackColor = true;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(849, 511);
+			this.ClientSize = new System.Drawing.Size(914, 511);
 			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.splitContainer1);
 			this.Margin = new System.Windows.Forms.Padding(2);
@@ -354,7 +400,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
-			this.splitContainer1.Panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
 			this.splitContainer2.Panel1.ResumeLayout(false);
@@ -364,6 +409,12 @@
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
 			this.contextMenuStrip1.ResumeLayout(false);
+			this.splitContainer3.Panel1.ResumeLayout(false);
+			this.splitContainer3.Panel1.PerformLayout();
+			this.splitContainer3.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
+			this.splitContainer3.ResumeLayout(false);
+			this.flowLayoutPanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -376,7 +427,6 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton openProjectButton;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStripButton OpenFromXML;
@@ -395,6 +445,10 @@
 		private System.Windows.Forms.ToolStripMenuItem открытьПроектToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem сохранитьПроектToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem новыйПроектToolStripMenuItem;
+		private System.Windows.Forms.SplitContainer splitContainer3;
+		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+		private System.Windows.Forms.Button addComponentButton;
+		private System.Windows.Forms.Button removeComponentButton;
 	}
 }
 

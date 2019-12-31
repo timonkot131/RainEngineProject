@@ -43,9 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\Component.cs" />
     <Compile Include="Abstract\IModel.cs" />
     <Compile Include="Abstract\IScene.cs" />
     <Compile Include="Abstract\SceneObject.cs" />
+    <Compile Include="Attributes\ComponentEditableField.cs" />
+    <Compile Include="Attributes\ComponentName.cs" />
+    <Compile Include="ComponentDictionary.cs" />
+    <Compile Include="Components\Script.cs" />
     <Compile Include="EmptyObject.cs" />
     <Compile Include="FigureDrawing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

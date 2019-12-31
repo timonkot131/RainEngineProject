@@ -32,13 +32,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Accessibility" />
     <Reference Include="MoonSharp.Interpreter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=921e73ce94aa17f8, processorArchitecture=MSIL">
       <HintPath>..\packages\MoonSharp.2.0.0.0\lib\net40-client\MoonSharp.Interpreter.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -56,6 +60,12 @@
   <ItemGroup>
     <Compile Include="Abstract\IMouseInteractionFactory.cs" />
     <Compile Include="Abstract\IView.cs" />
+    <Compile Include="CustomInterface\ComponentView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomInterface\ComponentView.Designer.cs">
+      <DependentUpon>ComponentView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Entities\EditorEventArgs.cs" />
     <Compile Include="Entities\SceneObjectListEventArgs.cs" />
     <Compile Include="InteractionFabrics\CreateObjInter.cs" />
@@ -73,6 +83,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CustomInterface\ComponentView.resx">
+      <DependentUpon>ComponentView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -103,6 +116,10 @@
     <ProjectReference Include="..\RainEngine.BL\RainEngine.BL.csproj">
       <Project>{c73a4a2e-efca-4f20-a2be-e721ae352560}</Project>
       <Name>RainEngine.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RainEngineGame\RainEngineGame.csproj">
+      <Project>{1795c132-4f2f-4d5d-8472-e8bbe1fb452a}</Project>
+      <Name>RainEngineGame</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
