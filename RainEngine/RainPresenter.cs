@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 using System.Windows.Forms;
 using RainEngine.Abstract;
 using RainEngine.Entities;
@@ -66,7 +67,8 @@ namespace RainEngine
 			this.view.DeleteClick += view_DeleteObjectClick;
 			this.view.DuplicateClick += view_DuplicateObjectClick;
 			this.view.SearchTextBox.TextChanged += view_SearchBoxTextChanged;
-
+			this.view.TabControlTabSwithed += view_TabConrolTabSwitched;
+	
 			using (Graphics gr = Graphics.FromImage(emptyImage))
 			{
 				gr.Clear(Color.White);
@@ -327,6 +329,11 @@ namespace RainEngine
 		{
 			var sceneObjects = model.SceneObjects.Where(x => x.Name.Contains(view.SearchTextBox.Text)).ToList();
 			view.UpdateSceneObjectsData(sceneObjects);
+		}
+
+		private void view_TabConrolTabSwitched(object sender,EventArgs e)
+		{
+			view.SearchFilesForListViews();
 		}
 	}
 }

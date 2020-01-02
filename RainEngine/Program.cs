@@ -23,10 +23,11 @@ namespace RainEngine
 
             IScene modelscene = new Scene();
             MainForm view = new MainForm();
+			EditorStart startView = new EditorStart(view);
 
             RainPresenter presenter = new RainPresenter(modelscene,view);
 
-            Application.Run(view);
+            Application.Run(startView);
         }
     }
 }

@@ -28,6 +28,8 @@ namespace RainEngine.Abstract
 
 		void ClearGraphics();
 
+		void SearchFilesForListViews();
+
 		void ChangeCursor(Cursor cursor);
 
 		event EventHandler<EventArgs> OpenProjectClick;
@@ -57,6 +59,8 @@ namespace RainEngine.Abstract
 		event EventHandler<EditorEventArgs> DeleteClick;
 
 		event EventHandler<EditorEventArgs> PropertyValueChanged;
+
+		event EventHandler<EventArgs> TabControlTabSwithed;
 	}
 }
 

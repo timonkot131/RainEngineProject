@@ -29,17 +29,21 @@
         private void InitializeComponent()
         {
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("прапр");
-			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("рпапр");
-			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("рпар");
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("прапр");
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("рпапр");
+			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("рпар");
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.listView1 = new System.Windows.Forms.ListView();
-			this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+			this.splitContainer3 = new System.Windows.Forms.SplitContainer();
 			this.searchObjectsBox = new System.Windows.Forms.TextBox();
+			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			this.removeComponentButton = new System.Windows.Forms.Button();
+			this.addComponentButton = new System.Windows.Forms.Button();
+			this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
 			this.открытьПроектToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,10 +60,17 @@
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.дублироватьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-			this.addComponentButton = new System.Windows.Forms.Button();
-			this.removeComponentButton = new System.Windows.Forms.Button();
+			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.tabPage4 = new System.Windows.Forms.TabPage();
+			this.tabPage5 = new System.Windows.Forms.TabPage();
+			this.listView2 = new System.Windows.Forms.ListView();
+			this.scriptListView = new System.Windows.Forms.ListView();
+			this.scripts = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+			this.sceneListView = new System.Windows.Forms.ListView();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -69,20 +80,25 @@
 			this.splitContainer2.Panel1.SuspendLayout();
 			this.splitContainer2.Panel2.SuspendLayout();
 			this.splitContainer2.SuspendLayout();
-			this.toolStrip1.SuspendLayout();
-			this.contextMenuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
 			this.splitContainer3.Panel1.SuspendLayout();
 			this.splitContainer3.Panel2.SuspendLayout();
 			this.splitContainer3.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
+			this.toolStrip1.SuspendLayout();
+			this.contextMenuStrip1.SuspendLayout();
+			this.tabControl1.SuspendLayout();
+			this.tabPage1.SuspendLayout();
+			this.tabPage2.SuspendLayout();
+			this.tabPage3.SuspendLayout();
+			this.tabPage4.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pictureBox1
 			// 
 			this.pictureBox1.BackColor = System.Drawing.Color.White;
 			this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.pictureBox1.Location = new System.Drawing.Point(11, 13);
+			this.pictureBox1.Location = new System.Drawing.Point(3, 3);
 			this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
 			this.pictureBox1.Name = "pictureBox1";
 			this.pictureBox1.Size = new System.Drawing.Size(630, 347);
@@ -147,9 +163,9 @@
 			// 
 			// splitContainer2.Panel2
 			// 
-			this.splitContainer2.Panel2.Controls.Add(this.listView1);
+			this.splitContainer2.Panel2.Controls.Add(this.tabControl1);
 			this.splitContainer2.Size = new System.Drawing.Size(652, 476);
-			this.splitContainer2.SplitterDistance = 365;
+			this.splitContainer2.SplitterDistance = 355;
 			this.splitContainer2.SplitterWidth = 3;
 			this.splitContainer2.TabIndex = 2;
 			// 
@@ -162,28 +178,38 @@
 			this.listView1.GridLines = true;
 			this.listView1.HideSelection = false;
 			this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem4,
-            listViewItem5,
-            listViewItem6});
-			this.listView1.Location = new System.Drawing.Point(2, 5);
+            listViewItem1,
+            listViewItem2,
+            listViewItem3});
+			this.listView1.Location = new System.Drawing.Point(0, 2);
 			this.listView1.Margin = new System.Windows.Forms.Padding(2);
 			this.listView1.MultiSelect = false;
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(644, 101);
+			this.listView1.Size = new System.Drawing.Size(639, 88);
 			this.listView1.TabIndex = 1;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.SelectedIndexChanged += new System.EventHandler(this.ListView1_SelectedIndexChanged);
 			this.listView1.Leave += new System.EventHandler(this.ListView1_Leave);
 			// 
-			// propertyGrid1
+			// splitContainer3
 			// 
-			this.propertyGrid1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.propertyGrid1.Location = new System.Drawing.Point(2, 60);
-			this.propertyGrid1.Margin = new System.Windows.Forms.Padding(2);
-			this.propertyGrid1.Name = "propertyGrid1";
-			this.propertyGrid1.Size = new System.Drawing.Size(190, 214);
-			this.propertyGrid1.TabIndex = 3;
-			this.propertyGrid1.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PropertyGrid1_PropertyValueChanged);
+			this.splitContainer3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.splitContainer3.Location = new System.Drawing.Point(3, 4);
+			this.splitContainer3.Name = "splitContainer3";
+			this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// splitContainer3.Panel1
+			// 
+			this.splitContainer3.Panel1.Controls.Add(this.searchObjectsBox);
+			this.splitContainer3.Panel1.Controls.Add(this.listBox1);
+			// 
+			// splitContainer3.Panel2
+			// 
+			this.splitContainer3.Panel2.Controls.Add(this.flowLayoutPanel1);
+			this.splitContainer3.Size = new System.Drawing.Size(220, 473);
+			this.splitContainer3.SplitterDistance = 206;
+			this.splitContainer3.TabIndex = 1;
 			// 
 			// searchObjectsBox
 			// 
@@ -194,6 +220,48 @@
 			this.searchObjectsBox.Name = "searchObjectsBox";
 			this.searchObjectsBox.Size = new System.Drawing.Size(212, 20);
 			this.searchObjectsBox.TabIndex = 2;
+			// 
+			// flowLayoutPanel1
+			// 
+			this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.flowLayoutPanel1.AutoScroll = true;
+			this.flowLayoutPanel1.Controls.Add(this.removeComponentButton);
+			this.flowLayoutPanel1.Controls.Add(this.addComponentButton);
+			this.flowLayoutPanel1.Controls.Add(this.propertyGrid1);
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(5, 3);
+			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(215, 257);
+			this.flowLayoutPanel1.TabIndex = 4;
+			// 
+			// removeComponentButton
+			// 
+			this.removeComponentButton.Location = new System.Drawing.Point(3, 3);
+			this.removeComponentButton.Name = "removeComponentButton";
+			this.removeComponentButton.Size = new System.Drawing.Size(189, 23);
+			this.removeComponentButton.TabIndex = 5;
+			this.removeComponentButton.Text = "Убрать компонент";
+			this.removeComponentButton.UseVisualStyleBackColor = true;
+			// 
+			// addComponentButton
+			// 
+			this.addComponentButton.Location = new System.Drawing.Point(3, 32);
+			this.addComponentButton.Name = "addComponentButton";
+			this.addComponentButton.Size = new System.Drawing.Size(189, 23);
+			this.addComponentButton.TabIndex = 4;
+			this.addComponentButton.Text = "Добавить компонент";
+			this.addComponentButton.UseVisualStyleBackColor = true;
+			// 
+			// propertyGrid1
+			// 
+			this.propertyGrid1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.propertyGrid1.Location = new System.Drawing.Point(2, 60);
+			this.propertyGrid1.Margin = new System.Windows.Forms.Padding(2);
+			this.propertyGrid1.Name = "propertyGrid1";
+			this.propertyGrid1.Size = new System.Drawing.Size(190, 214);
+			this.propertyGrid1.TabIndex = 3;
+			this.propertyGrid1.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PropertyGrid1_PropertyValueChanged);
 			// 
 			// toolStrip1
 			// 
@@ -335,57 +403,114 @@
 			this.дублироватьToolStripMenuItem.Text = "Дублировать";
 			this.дублироватьToolStripMenuItem.Click += new System.EventHandler(this.ДублироватьToolStripMenuItem_Click);
 			// 
-			// splitContainer3
+			// tabControl1
 			// 
-			this.splitContainer3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-			this.splitContainer3.Location = new System.Drawing.Point(3, 4);
-			this.splitContainer3.Name = "splitContainer3";
-			this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
-			// 
-			// splitContainer3.Panel1
-			// 
-			this.splitContainer3.Panel1.Controls.Add(this.searchObjectsBox);
-			this.splitContainer3.Panel1.Controls.Add(this.listBox1);
-			// 
-			// splitContainer3.Panel2
-			// 
-			this.splitContainer3.Panel2.Controls.Add(this.flowLayoutPanel1);
-			this.splitContainer3.Size = new System.Drawing.Size(220, 473);
-			this.splitContainer3.SplitterDistance = 206;
-			this.splitContainer3.TabIndex = 1;
-			// 
-			// flowLayoutPanel1
-			// 
-			this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.flowLayoutPanel1.AutoScroll = true;
-			this.flowLayoutPanel1.Controls.Add(this.removeComponentButton);
-			this.flowLayoutPanel1.Controls.Add(this.addComponentButton);
-			this.flowLayoutPanel1.Controls.Add(this.propertyGrid1);
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(5, 3);
-			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(215, 257);
-			this.flowLayoutPanel1.TabIndex = 4;
+			this.tabControl1.Controls.Add(this.tabPage1);
+			this.tabControl1.Controls.Add(this.tabPage2);
+			this.tabControl1.Controls.Add(this.tabPage3);
+			this.tabControl1.Controls.Add(this.tabPage4);
+			this.tabControl1.Controls.Add(this.tabPage5);
+			this.tabControl1.Location = new System.Drawing.Point(3, -3);
+			this.tabControl1.Name = "tabControl1";
+			this.tabControl1.SelectedIndex = 0;
+			this.tabControl1.Size = new System.Drawing.Size(647, 116);
+			this.tabControl1.TabIndex = 2;
+			this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.TabControl1_Selecting);
 			// 
-			// addComponentButton
+			// tabPage1
 			// 
-			this.addComponentButton.Location = new System.Drawing.Point(3, 32);
-			this.addComponentButton.Name = "addComponentButton";
-			this.addComponentButton.Size = new System.Drawing.Size(189, 23);
-			this.addComponentButton.TabIndex = 4;
-			this.addComponentButton.Text = "Добавить компонент";
-			this.addComponentButton.UseVisualStyleBackColor = true;
+			this.tabPage1.Controls.Add(this.listView1);
+			this.tabPage1.Location = new System.Drawing.Point(4, 22);
+			this.tabPage1.Name = "tabPage1";
+			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage1.Size = new System.Drawing.Size(639, 90);
+			this.tabPage1.TabIndex = 0;
+			this.tabPage1.Text = "Объекты - кисти";
+			this.tabPage1.UseVisualStyleBackColor = true;
 			// 
-			// removeComponentButton
+			// tabPage2
 			// 
-			this.removeComponentButton.Location = new System.Drawing.Point(3, 3);
-			this.removeComponentButton.Name = "removeComponentButton";
-			this.removeComponentButton.Size = new System.Drawing.Size(189, 23);
-			this.removeComponentButton.TabIndex = 5;
-			this.removeComponentButton.Text = "Убрать компонент";
-			this.removeComponentButton.UseVisualStyleBackColor = true;
+			this.tabPage2.Controls.Add(this.listView2);
+			this.tabPage2.Location = new System.Drawing.Point(4, 22);
+			this.tabPage2.Name = "tabPage2";
+			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage2.Size = new System.Drawing.Size(639, 90);
+			this.tabPage2.TabIndex = 1;
+			this.tabPage2.Text = "Сценабы";
+			this.tabPage2.UseVisualStyleBackColor = true;
+			// 
+			// tabPage3
+			// 
+			this.tabPage3.Controls.Add(this.sceneListView);
+			this.tabPage3.Location = new System.Drawing.Point(4, 22);
+			this.tabPage3.Name = "tabPage3";
+			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage3.Size = new System.Drawing.Size(639, 90);
+			this.tabPage3.TabIndex = 2;
+			this.tabPage3.Text = "Сцены";
+			this.tabPage3.UseVisualStyleBackColor = true;
+			// 
+			// tabPage4
+			// 
+			this.tabPage4.Controls.Add(this.scriptListView);
+			this.tabPage4.Location = new System.Drawing.Point(4, 22);
+			this.tabPage4.Name = "tabPage4";
+			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage4.Size = new System.Drawing.Size(639, 90);
+			this.tabPage4.TabIndex = 3;
+			this.tabPage4.Text = "Скрипты";
+			this.tabPage4.UseVisualStyleBackColor = true;
+			// 
+			// tabPage5
+			// 
+			this.tabPage5.Location = new System.Drawing.Point(4, 22);
+			this.tabPage5.Name = "tabPage5";
+			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage5.Size = new System.Drawing.Size(639, 90);
+			this.tabPage5.TabIndex = 4;
+			this.tabPage5.Text = "Аудиофайлы";
+			this.tabPage5.UseVisualStyleBackColor = true;
+			// 
+			// listView2
+			// 
+			this.listView2.HideSelection = false;
+			this.listView2.Location = new System.Drawing.Point(3, 4);
+			this.listView2.Name = "listView2";
+			this.listView2.Size = new System.Drawing.Size(630, 83);
+			this.listView2.TabIndex = 0;
+			this.listView2.UseCompatibleStateImageBehavior = false;
+			// 
+			// scriptListView
+			// 
+			this.scriptListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.scripts});
+			this.scriptListView.HideSelection = false;
+			this.scriptListView.LargeImageList = this.imageList1;
+			this.scriptListView.Location = new System.Drawing.Point(0, 0);
+			this.scriptListView.Name = "scriptListView";
+			this.scriptListView.Size = new System.Drawing.Size(639, 90);
+			this.scriptListView.TabIndex = 0;
+			this.scriptListView.UseCompatibleStateImageBehavior = false;
+			// 
+			// imageList1
+			// 
+			this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+			this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList1.Images.SetKeyName(0, "moon.png");
+			this.imageList1.Images.SetKeyName(1, "scene");
+			// 
+			// sceneListView
+			// 
+			this.sceneListView.HideSelection = false;
+			this.sceneListView.LargeImageList = this.imageList1;
+			this.sceneListView.Location = new System.Drawing.Point(4, 3);
+			this.sceneListView.Name = "sceneListView";
+			this.sceneListView.Size = new System.Drawing.Size(634, 84);
+			this.sceneListView.TabIndex = 0;
+			this.sceneListView.UseCompatibleStateImageBehavior = false;
 			// 
 			// MainForm
 			// 
@@ -397,6 +522,7 @@
 			this.Margin = new System.Windows.Forms.Padding(2);
 			this.Name = "MainForm";
 			this.Text = "Form1";
+			this.Shown += new System.EventHandler(this.MainForm_Shown);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
@@ -406,15 +532,20 @@
 			this.splitContainer2.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
 			this.splitContainer2.ResumeLayout(false);
-			this.toolStrip1.ResumeLayout(false);
-			this.toolStrip1.PerformLayout();
-			this.contextMenuStrip1.ResumeLayout(false);
 			this.splitContainer3.Panel1.ResumeLayout(false);
 			this.splitContainer3.Panel1.PerformLayout();
 			this.splitContainer3.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
 			this.splitContainer3.ResumeLayout(false);
 			this.flowLayoutPanel1.ResumeLayout(false);
+			this.toolStrip1.ResumeLayout(false);
+			this.toolStrip1.PerformLayout();
+			this.contextMenuStrip1.ResumeLayout(false);
+			this.tabControl1.ResumeLayout(false);
+			this.tabPage1.ResumeLayout(false);
+			this.tabPage2.ResumeLayout(false);
+			this.tabPage3.ResumeLayout(false);
+			this.tabPage4.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -449,6 +580,17 @@
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 		private System.Windows.Forms.Button addComponentButton;
 		private System.Windows.Forms.Button removeComponentButton;
+		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.TabPage tabPage1;
+		private System.Windows.Forms.TabPage tabPage2;
+		private System.Windows.Forms.ListView listView2;
+		private System.Windows.Forms.TabPage tabPage3;
+		private System.Windows.Forms.TabPage tabPage4;
+		private System.Windows.Forms.TabPage tabPage5;
+		private System.Windows.Forms.ListView scriptListView;
+		private System.Windows.Forms.ColumnHeader scripts;
+		private System.Windows.Forms.ImageList imageList1;
+		private System.Windows.Forms.ListView sceneListView;
 	}
 }
 

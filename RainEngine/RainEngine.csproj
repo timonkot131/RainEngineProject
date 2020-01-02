@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="Microsoft.Build" />
     <Reference Include="MoonSharp.Interpreter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=921e73ce94aa17f8, processorArchitecture=MSIL">
       <HintPath>..\packages\MoonSharp.2.0.0.0\lib\net40-client\MoonSharp.Interpreter.dll</HintPath>
     </Reference>
@@ -66,6 +67,12 @@
     <Compile Include="CustomInterface\ComponentView.Designer.cs">
       <DependentUpon>ComponentView.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditorStart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditorStart.Designer.cs">
+      <DependentUpon>EditorStart.cs</DependentUpon>
+    </Compile>
     <Compile Include="Entities\EditorEventArgs.cs" />
     <Compile Include="Entities\SceneObjectListEventArgs.cs" />
     <Compile Include="InteractionFabrics\CreateObjInter.cs" />
@@ -74,6 +81,7 @@
     <Compile Include="InteractionFabrics\SizeHorizontalInter.cs" />
     <Compile Include="InteractionFabrics\SizeVerticalInter.cs" />
     <Compile Include="InteractionFabrics\TransformObjtInter.cs" />
+    <Compile Include="ProjectSettings.cs" />
     <Compile Include="RainPresenter.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -86,6 +94,9 @@
     <EmbeddedResource Include="CustomInterface\ComponentView.resx">
       <DependentUpon>ComponentView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EditorStart.resx">
+      <DependentUpon>EditorStart.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -97,6 +108,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -122,6 +134,11 @@
       <Name>RainEngineGame</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\luaMoon.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\moon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

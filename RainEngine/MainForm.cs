@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 using RainEngine.Abstract;
 using RainEngine.Entities;
@@ -38,7 +39,7 @@ namespace RainEngine
 			SearchTextBox = searchObjectsBox;
 			graph = pictureBox1.CreateGraphics();
 		}
-
+		
 		public void UpdateScenabsData(List<BL.Abstract.SceneObject> scenabs, Bitmap[] scenabimgs)
 		{
 			listView1.Items.Clear();
@@ -49,12 +50,14 @@ namespace RainEngine
 			{
 				gr.Clear(Color.White);
 			}
+
 			foreach (Bitmap bm in scenabimgs)
 			{
 				imageList.Images.Add(bm);
 			}
 			listView1.LargeImageList = imageList;
 			List<BL.Abstract.SceneObject> Objects = scenabs;
+
 			for (int i = 0; i < Objects.Count; i++)
 			{
 				ListViewItem listViewItem = new ListViewItem(Objects[i].Name);
@@ -67,6 +70,7 @@ namespace RainEngine
 		public void UpdateSceneObjectsData(List<BL.Abstract.SceneObject> SceneObjs)
 		{
 			listBox1.Items.Clear();
+
 			foreach (BL.Abstract.SceneObject sceneObj in SceneObjs)
 			{
 				listBox1.Items.Add(sceneObj);
@@ -85,7 +89,51 @@ namespace RainEngine
 			Cursor.Current = cursor;
 		}
 
+		public void SearchFilesForListViews()
+		{
+			sceneListView.Items.Clear();
+			scriptListView.Items.Clear();
+
+			var scriptsPath = ProjectSettings.Manifest.Root.Element("ScriptsPath").Value;
+			var scenesPath = ProjectSettings.Manifest.Root.Element("ScenesPath").Value;
+
+			string[] scripts = Directory.GetFiles(scriptsPath);
+			string[] scenes = Directory.GetFiles(scenesPath);
+
+			foreach (string file in scripts)
+			{
+				string fileName = file.Remove(0, file.LastIndexOf('\\') + 1);
+
+				if (!fileName.Contains(".lua"))
+				{
+					continue;
+				}
+
+				var item = new ListViewItem();
+				item.Text = fileName;
+				item.ImageIndex = 0;
+
+				scriptListView.Items.Add(item);
+			}
+
+			foreach (string file in scenes)
+			{
+				var item = new ListViewItem();
+
+				item.Text = file.Remove(0, file.LastIndexOf('\\') + 1);
+				item.ImageIndex = 1;
+
+				sceneListView.Items.Add(item);
+			}
+		}
+
 		#region Переброс событий
+
+		public event EventHandler<EventArgs> TabControlTabSwithed;
+		protected virtual void OnTabSwitched(EventArgs e)
+		{
+			TabControlTabSwithed?.Invoke(this, e);
+		}
 
 		public event EventHandler<EditorEventArgs> DeleteClick;
 		protected virtual void OnDeleteClick(EditorEventArgs e)
@@ -258,6 +306,27 @@ namespace RainEngine
 		private void ДублироватьToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			OnDuplicateClick(new EditorEventArgs(graph));
+		}
+
+		private void MainForm_Shown(object sender, EventArgs e)
+		{
+
+			SearchFilesForListViews();
+			try
+			{
+				var projectName = ProjectSettings.Manifest.Root.Attribute("name").Value;
+				var projectVersion = ProjectSettings.Manifest.Root.Attribute("version").Value;
+				Text = "RainEngine - " + projectName + " " + projectVersion;
+			}
+			catch
+			{
+				MessageBox.Show("Произошла ошибка парсинга проекта. Возможно неверный формат файла.");
+			}
+		}
+
+		private void TabControl1_Selecting(object sender, TabControlCancelEventArgs e)
+		{
+			OnTabSwitched(e);
 		}
 	}
 }
