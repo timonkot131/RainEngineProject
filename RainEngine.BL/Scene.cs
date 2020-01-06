@@ -26,11 +26,23 @@ namespace RainEngine.BL
 				using (FileStream fs = new FileStream(filepath, FileMode.OpenOrCreate))
 				{
 					sceneObjects = (List<SceneObject>)formatter.Deserialize(fs);
+					foreach(SceneObject sceneObject in sceneObjects)
+					{
+						ResolveReferencesInComponents(sceneObject);
+					}
 				}
 			}
 			catch (Exception e)
 			{
 				System.Windows.Forms.MessageBox.Show(Convert.ToString(e));
+			}
+		}
+		
+		private void ResolveReferencesInComponents(SceneObject sceneObject)
+		{
+			foreach(var keyValue in sceneObject.Components)
+			{
+				sceneObject.Components[keyValue.Key].Target = sceneObject;
 			}
 		}
 

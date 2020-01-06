@@ -35,8 +35,6 @@ namespace RainEngine
 			new CreateObjInter()
 		};
 
-
-
 		List<SceneObject> scenabs = new List<SceneObject>();
 		Bitmap emptyImage = new Bitmap(50, 50);
 

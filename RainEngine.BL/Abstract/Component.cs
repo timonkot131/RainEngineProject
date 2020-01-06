@@ -17,9 +17,11 @@ namespace RainEngine.BL.Abstract
 
 		public abstract string GetName();
 
+
 		[DisplayName("Прикрепленный объект")]
 		[Browsable(true)]
 		[Category("Поля компонента")]
+		[XmlIgnore]
 		public SceneObject Target { get; set; }
 	}
 }

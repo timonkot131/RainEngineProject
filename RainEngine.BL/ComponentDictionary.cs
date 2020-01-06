@@ -21,7 +21,7 @@ namespace RainEngine.BL
 
 		public void ReadXml(System.Xml.XmlReader reader)
 		{
-			XmlSerializer keySerializer = new XmlSerializer(typeof(Type));
+			XmlSerializer keySerializer = new XmlSerializer(typeof(string));
 			XmlSerializer valueSerializer = new XmlSerializer(typeof(Abstract.Component));
 
 			bool wasEmpty = reader.IsEmptyElement;
@@ -35,7 +35,7 @@ namespace RainEngine.BL
 				reader.ReadStartElement("item");
 
 				reader.ReadStartElement("key");
-				Type key = (Type)keySerializer.Deserialize(reader);
+				Type key = Type.GetType((string)keySerializer.Deserialize(reader));
 				reader.ReadEndElement();
 
 				reader.ReadStartElement("value");
@@ -52,7 +52,7 @@ namespace RainEngine.BL
 
 		public void WriteXml(System.Xml.XmlWriter writer)
 		{
-			XmlSerializer keySerializer = new XmlSerializer(typeof(Type));
+			XmlSerializer keySerializer = new XmlSerializer(typeof(string));
 			XmlSerializer valueSerializer = new XmlSerializer(typeof(Abstract.Component));
 
 			foreach (Type key in this.Keys)
@@ -60,7 +60,7 @@ namespace RainEngine.BL
 				writer.WriteStartElement("item");
 
 				writer.WriteStartElement("key");
-				keySerializer.Serialize(writer, key);
+				keySerializer.Serialize(writer, key.FullName);
 				writer.WriteEndElement();
 
 				writer.WriteStartElement("value");
