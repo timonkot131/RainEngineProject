@@ -11,7 +11,7 @@ namespace RainEngine.BL
 {
 	[Category("Прочие компоненты")]
 	[Serializable]
-	public class ComponentDictionary : Dictionary<string, Abstract.Component>, IXmlSerializable
+	public class ComponentDictionary : Dictionary<Type, Abstract.Component>, IXmlSerializable
 	{
 
 		public System.Xml.Schema.XmlSchema GetSchema()
@@ -21,7 +21,7 @@ namespace RainEngine.BL
 
 		public void ReadXml(System.Xml.XmlReader reader)
 		{
-			XmlSerializer keySerializer = new XmlSerializer(typeof(string));
+			XmlSerializer keySerializer = new XmlSerializer(typeof(Type));
 			XmlSerializer valueSerializer = new XmlSerializer(typeof(Abstract.Component));
 
 			bool wasEmpty = reader.IsEmptyElement;
@@ -35,7 +35,7 @@ namespace RainEngine.BL
 				reader.ReadStartElement("item");
 
 				reader.ReadStartElement("key");
-				string key = (string)keySerializer.Deserialize(reader);
+				Type key = (Type)keySerializer.Deserialize(reader);
 				reader.ReadEndElement();
 
 				reader.ReadStartElement("value");
@@ -52,10 +52,10 @@ namespace RainEngine.BL
 
 		public void WriteXml(System.Xml.XmlWriter writer)
 		{
-			XmlSerializer keySerializer = new XmlSerializer(typeof(string));
+			XmlSerializer keySerializer = new XmlSerializer(typeof(Type));
 			XmlSerializer valueSerializer = new XmlSerializer(typeof(Abstract.Component));
 
-			foreach (string key in this.Keys)
+			foreach (Type key in this.Keys)
 			{
 				writer.WriteStartElement("item");
 
@@ -72,6 +72,8 @@ namespace RainEngine.BL
 			}
 		}
 
+		#region hided base properties
+
 		[Browsable(false)]
 		new public int Count
 		{
@@ -82,7 +84,7 @@ namespace RainEngine.BL
 		}
 
 		[Browsable(false)]
-		new public IEqualityComparer<string> Comparer
+		new public IEqualityComparer<Type> Comparer
 		{
 			get
 			{
@@ -102,6 +104,7 @@ namespace RainEngine.BL
 		{
 			get { return base.Values;  }
 		}
+		#endregion
 
 		public ComponentDictionary() : base() {}
 

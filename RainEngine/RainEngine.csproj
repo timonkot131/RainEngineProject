@@ -61,12 +61,6 @@
   <ItemGroup>
     <Compile Include="Abstract\IMouseInteractionFactory.cs" />
     <Compile Include="Abstract\IView.cs" />
-    <Compile Include="CustomInterface\ComponentView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CustomInterface\ComponentView.Designer.cs">
-      <DependentUpon>ComponentView.cs</DependentUpon>
-    </Compile>
     <Compile Include="EditorStart.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,9 +85,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CustomInterface\ComponentView.resx">
-      <DependentUpon>ComponentView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="EditorStart.resx">
       <DependentUpon>EditorStart.cs</DependentUpon>
     </EmbeddedResource>

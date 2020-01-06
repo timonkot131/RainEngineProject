@@ -17,6 +17,15 @@ namespace RainEngine.BL.Components
 		[Category("Поля компонента")]
 		public string Name { get; set; }
 
+		public override object Clone(SceneObject newTarget)
+		{
+			return new Script()
+			{
+				Name = Name,
+				Target = newTarget
+			};
+		}
+
 		public Script()
 		{
 
@@ -31,5 +40,11 @@ namespace RainEngine.BL.Components
 		{
 			return Name;
 		}
+
+		public override string GetName()
+		{
+			return "Script";
+		}
+
 	}
 }

@@ -47,16 +47,12 @@
     <Compile Include="Abstract\IModel.cs" />
     <Compile Include="Abstract\IScene.cs" />
     <Compile Include="Abstract\SceneObject.cs" />
-    <Compile Include="Attributes\ComponentEditableField.cs" />
-    <Compile Include="Attributes\ComponentName.cs" />
     <Compile Include="ComponentDictionary.cs" />
+    <Compile Include="Components\Drawer.cs" />
     <Compile Include="Components\Script.cs" />
-    <Compile Include="EmptyObject.cs" />
     <Compile Include="FigureDrawing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RasterObject.cs" />
     <Compile Include="Scene.cs" />
-    <Compile Include="VectorObject.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

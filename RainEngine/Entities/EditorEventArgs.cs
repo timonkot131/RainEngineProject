@@ -25,7 +25,7 @@ namespace RainEngine.Entities
 			this.X = X;
 			this.Y = Y;
 			this.IndeciesCount = IndeciesCount;
-			SceneObject = new EmptyObject();
+			SceneObject = new SceneObject();
 			this.Graph = Graph;
 		}
 		public EditorEventArgs(Graphics Graph)
@@ -33,7 +33,7 @@ namespace RainEngine.Entities
 			X = 0;
 			Y = 0;
 			IndeciesCount = 0;
-			SceneObject = new EmptyObject();
+			SceneObject = new SceneObject();
 			this.Graph = Graph;
 
 		}

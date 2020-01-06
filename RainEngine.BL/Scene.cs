@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.Windows.Forms;
 using RainEngine.BL.Abstract;
+using RainEngine.BL.Components;
 
 namespace RainEngine.BL
 {
@@ -69,7 +70,7 @@ namespace RainEngine.BL
 		{
 			foreach (SceneObject obj in sceneObjects)
 			{
-				obj.Create(graph, pen);
+				obj.GetComponent<Drawer>().Draw(graph, pen);
 			}
 		}
 		public SceneObject GetSceneObject(int id)

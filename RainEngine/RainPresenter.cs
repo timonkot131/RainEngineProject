@@ -11,6 +11,7 @@ using RainEngine.Entities;
 using RainEngine.InteractionFabrics;
 using RainEngine.BL;
 using RainEngine.BL.Abstract;
+using RainEngine.BL.Components;
 using System.Text.RegularExpressions;
 using RainEngineGame;
 
@@ -34,14 +35,9 @@ namespace RainEngine
 			new CreateObjInter()
 		};
 
-		List<SceneObject> scenabs = new List<SceneObject>()
-		{
-			new VectorObject("Circle",0,0,100,100,VectorObject.Shapes.Circle),
-			new VectorObject("Square",0,0,100,100,VectorObject.Shapes.Square),
-			new VectorObject("StickMan",0,0,100,100,VectorObject.Shapes.StickMan),
-			new VectorObject("Arrow_Vertical",0,0,100,100,VectorObject.Shapes.Arrow_Vertical),
-			new VectorObject("Arrow_Horizontal",0,0,100,100,VectorObject.Shapes.Arrow_Horizontal)
-		};
+
+
+		List<SceneObject> scenabs = new List<SceneObject>();
 		Bitmap emptyImage = new Bitmap(50, 50);
 
 		Bitmap[] scenabimgs = new Bitmap[4];
@@ -68,7 +64,37 @@ namespace RainEngine
 			this.view.DuplicateClick += view_DuplicateObjectClick;
 			this.view.SearchTextBox.TextChanged += view_SearchBoxTextChanged;
 			this.view.TabControlTabSwithed += view_TabConrolTabSwitched;
-	
+
+			var circleBrush = new SceneObject("Circle", 0, 0, 100, 100);
+			var circleDrawer = circleBrush.AttachComponent<Drawer>();
+			circleDrawer.UseBrush = true;
+			circleDrawer.Shape = Shapes.Circle;
+			scenabs.Add(circleBrush);
+
+			var squareBrush = new SceneObject("Square", 0, 0, 100, 100);
+			var squareDrawer = squareBrush.AttachComponent<Drawer>();
+			squareDrawer.UseBrush = true;
+			squareDrawer.Shape = Shapes.Square;
+			scenabs.Add(squareBrush);
+
+			var arrowVerticalBrush = new SceneObject("Arrow_Vertical", 0, 0, 100, 100);
+			var arrowVerticalDrawer = arrowVerticalBrush.AttachComponent<Drawer>();
+			arrowVerticalDrawer.UseBrush = true;
+			arrowVerticalDrawer.Shape = Shapes.Arrow_Vertical;
+			scenabs.Add(arrowVerticalBrush);
+
+			var arrowHorizontalBrush = new SceneObject("Arrow_Horizontal", 0, 0, 100, 100);
+			var arrowHorizontalDrawer = arrowHorizontalBrush.AttachComponent<Drawer>();
+			arrowHorizontalDrawer.UseBrush = true;
+			arrowHorizontalDrawer.Shape = Shapes.Arrow_Horizontal;
+			scenabs.Add(arrowHorizontalBrush);
+
+			var stickmanBrush = new SceneObject("Stickman", 0, 0, 100, 100);
+			var stickmanDrawer = stickmanBrush.AttachComponent<Drawer>();
+			stickmanDrawer.UseBrush = true;
+			stickmanDrawer.Shape = Shapes.StickMan;
+			scenabs.Add(stickmanBrush);
+
 			using (Graphics gr = Graphics.FromImage(emptyImage))
 			{
 				gr.Clear(Color.White);
@@ -114,15 +140,13 @@ namespace RainEngine
 		{
 			if (e.IndeciesCount != 0)
 			{
-				SceneObject sceneObject = (SceneObject)e.ListViewItemCollection[0].Tag;
+				var sceneObject = e.ListViewItemCollection[0].Tag as SceneObject;
 				sceneObject.X = firstPos.X;
 				sceneObject.Y = firstPos.Y;
+				var cloned = sceneObject.Clone() as SceneObject;
+				cloned.Name = GetUnicalName(cloned.Name);
 
-				if (sceneObject is VectorObject)
-				{
-					VectorObject obj = (VectorObject)sceneObject;
-					model.AddNewObject(new VectorObject(GetUnicalName(obj.Name), obj.X, obj.Y, obj.ScaleX, obj.ScaleY, obj.Shape));
-				}
+				model.AddNewObject(cloned);
 			}
 			else
 			{
@@ -219,7 +243,7 @@ namespace RainEngine
 			mouseInteraction.Interact(view, new Point(e.X, e.Y), e.SceneObject, firstPos);
 			if(mouseInteraction is CreateObjInter)
 			{
-				e.SceneObject.Create(e.Graph, colourPen);
+				e.SceneObject.GetComponent<Drawer>().Draw(e.Graph, colourPen);
 			}
 			if (e.SceneObject != null)
 			{

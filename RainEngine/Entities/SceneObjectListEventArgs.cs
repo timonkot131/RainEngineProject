@@ -14,7 +14,7 @@ namespace RainEngine.Entities
 		public SceneObjectListEventArgs(int itemIndex)
 		{
 			Item = itemIndex;
-			SceneObject = new EmptyObject();
+			SceneObject = new SceneObject();
 		}
 		public SceneObjectListEventArgs(SceneObject sceneObject)
 		{
