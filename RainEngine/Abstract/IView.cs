@@ -61,6 +61,11 @@ namespace RainEngine.Abstract
 		event EventHandler<EditorEventArgs> PropertyValueChanged;
 
 		event EventHandler<EventArgs> TabControlTabSwithed;
+
+		event EventHandler<EventArgs> ComponentDeleteClick;
+
+		event EventHandler<EventArgs> ComponentAddClick;
+
 	}
 }
 

@@ -193,6 +193,14 @@ namespace RainEngine.BL.Abstract
 			
 		}
 
+		public SceneObject AttachComponent(Component component)
+		{
+			component.Target = this;
+			components.Add(component.GetType(), component);
+
+			return this;
+		}
+
 		public T GetComponent<T>() where T : Component
 		{
 			try
@@ -209,6 +217,10 @@ namespace RainEngine.BL.Abstract
 		public void RemoveComponent<T>() where T : Component
 		{
 			components.Remove(typeof(T));
+		}
+		public void RemoveComponentByType(Component component)
+		{
+			components.Remove(component.GetType());
 		}
 
 		public override string ToString()

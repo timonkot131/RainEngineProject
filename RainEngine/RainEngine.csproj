@@ -61,6 +61,18 @@
   <ItemGroup>
     <Compile Include="Abstract\IMouseInteractionFactory.cs" />
     <Compile Include="Abstract\IView.cs" />
+    <Compile Include="AddComponentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddComponentForm.Designer.cs">
+      <DependentUpon>AddComponentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteComponentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeleteComponentForm.Designer.cs">
+      <DependentUpon>DeleteComponentForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditorStart.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +97,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddComponentForm.resx">
+      <DependentUpon>AddComponentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeleteComponentForm.resx">
+      <DependentUpon>DeleteComponentForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditorStart.resx">
       <DependentUpon>EditorStart.cs</DependentUpon>
     </EmbeddedResource>

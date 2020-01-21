@@ -129,6 +129,18 @@ namespace RainEngine
 
 		#region Переброс событий
 
+		public event EventHandler<EventArgs> ComponentAddClick;
+		protected virtual void OnComponentAddClick(EventArgs e)
+		{
+			ComponentAddClick?.Invoke(this, e);
+		}
+
+		public event EventHandler<EventArgs> ComponentDeleteClick;
+		protected virtual void OnComponentDeleteClick(EventArgs e)
+		{
+			ComponentDeleteClick?.Invoke(this, e);
+		}
+
 		public event EventHandler<EventArgs> TabControlTabSwithed;
 		protected virtual void OnTabSwitched(EventArgs e)
 		{
@@ -221,6 +233,9 @@ namespace RainEngine
 			PropertyValueChanged?.Invoke(this, e);
 		}
 		#endregion
+
+
+
 		private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
 		{
 			OnMouseDownEvent(new EditorEventArgs(e.X, e.Y, listView1.SelectedIndices.Count, graph));
@@ -327,6 +342,16 @@ namespace RainEngine
 		private void TabControl1_Selecting(object sender, TabControlCancelEventArgs e)
 		{
 			OnTabSwitched(e);
+		}
+
+		private void AddComponentButton_Click(object sender, EventArgs e)
+		{
+			OnComponentAddClick(e);
+		}
+
+		private void RemoveComponentButton_Click(object sender, EventArgs e)
+		{
+			OnComponentDeleteClick(e);
 		}
 	}
 }

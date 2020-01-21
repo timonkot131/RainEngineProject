@@ -15,6 +15,7 @@ using RainEngine.BL.Components;
 using System.Text.RegularExpressions;
 using RainEngineGame;
 
+public delegate void OnComplete(Component component, SceneObject sceneObject);
 
 namespace RainEngine
 {
@@ -62,7 +63,10 @@ namespace RainEngine
 			this.view.DuplicateClick += view_DuplicateObjectClick;
 			this.view.SearchTextBox.TextChanged += view_SearchBoxTextChanged;
 			this.view.TabControlTabSwithed += view_TabConrolTabSwitched;
+			this.view.ComponentAddClick += view_ComponentAddClick;
+			this.view.ComponentDeleteClick += view_ComponentDeleteClick;
 
+		
 			var circleBrush = new SceneObject("Circle", 0, 0, 100, 100);
 			var circleDrawer = circleBrush.AttachComponent<Drawer>();
 			circleDrawer.UseBrush = true;
@@ -356,6 +360,27 @@ namespace RainEngine
 		private void view_TabConrolTabSwitched(object sender,EventArgs e)
 		{
 			view.SearchFilesForListViews();
+		}
+
+		private void view_ComponentAddClick(object sender, EventArgs e)
+		{
+			var form = new AddComponentForm(view.PropertyGrid.SelectedObject as SceneObject, OnAddComponentChoosed);
+			form.Show();
+		}
+
+		private void view_ComponentDeleteClick(object sender, EventArgs e)
+		{
+			var form = new DeleteComponentForm(view.PropertyGrid.SelectedObject as SceneObject, OnDeleteComponentChoosed);
+		}
+
+		private void OnAddComponentChoosed(Component choosedComponent, SceneObject target)
+		{
+			target.AttachComponent(choosedComponent);
+		}
+
+		private void OnDeleteComponentChoosed(Component choosedComponent, SceneObject target)
+		{
+			target.RemoveComponentByType(choosedComponent);
 		}
 	}
 }
