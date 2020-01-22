@@ -22,6 +22,8 @@ namespace RainEngine.Abstract
 
 		TextBox SearchTextBox { get; set; }
 
+		SceneBox SceneBox { get; set; }
+
 		void UpdateScenabsData(List<SceneObject> scenabs, Bitmap[] scenabimgs);
 
 		void UpdateSceneObjectsData(List<SceneObject> SceneObjs);

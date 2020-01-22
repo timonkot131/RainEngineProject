@@ -31,6 +31,8 @@ namespace RainEngine
 			foreach(var componentType in componentTypes)
 			{
 				var component =(BL.Abstract.Component) Activator.CreateInstance(componentType);
+				
+				//string component = "test";
 				componentsBox.Items.Add(component);
 			}
 		}

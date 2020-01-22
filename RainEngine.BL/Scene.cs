@@ -82,7 +82,12 @@ namespace RainEngine.BL
 		{
 			foreach (SceneObject obj in sceneObjects)
 			{
-				obj.GetComponent<Drawer>().Draw(graph, pen);
+				Drawer drawer = obj.GetComponent<Drawer>();
+
+				if (drawer != null)
+				{
+					obj.GetComponent<Drawer>().Draw(graph, pen);
+				}
 			}
 		}
 		public SceneObject GetSceneObject(int id)

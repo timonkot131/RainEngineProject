@@ -16,6 +16,11 @@ namespace RainEngine.BL.Components
 
 		}
 
+		public override string ToString()
+		{
+			return "Drawer";
+		}
+
 		public override string GetName()
 		{
 			return "Drawer";

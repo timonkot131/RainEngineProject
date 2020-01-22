@@ -33,7 +33,7 @@
 			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("рпапр");
 			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("рпар");
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.pictureBox1 = new SceneBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -558,7 +558,7 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private SceneBox pictureBox1;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStrip toolStrip1;

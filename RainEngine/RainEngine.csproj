@@ -87,6 +87,7 @@
     <Compile Include="InteractionFabrics\SizeHorizontalInter.cs" />
     <Compile Include="InteractionFabrics\SizeVerticalInter.cs" />
     <Compile Include="InteractionFabrics\TransformObjtInter.cs" />
+    <Compile Include="Overlay.cs" />
     <Compile Include="ProjectSettings.cs" />
     <Compile Include="RainPresenter.cs" />
     <Compile Include="MainForm.cs">
@@ -97,6 +98,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SceneBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="AddComponentForm.resx">
       <DependentUpon>AddComponentForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -119,6 +123,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SceneBox.resx">
+      <DependentUpon>SceneBox.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

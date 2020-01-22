@@ -14,7 +14,6 @@ using RainEngine.BL.Abstract;
 using RainEngine.BL.Components;
 using System.Text.RegularExpressions;
 using RainEngineGame;
-
 public delegate void OnComplete(Component component, SceneObject sceneObject);
 
 namespace RainEngine
@@ -65,6 +64,7 @@ namespace RainEngine
 			this.view.TabControlTabSwithed += view_TabConrolTabSwitched;
 			this.view.ComponentAddClick += view_ComponentAddClick;
 			this.view.ComponentDeleteClick += view_ComponentDeleteClick;
+			this.view.PropertyGrid.SelectedObjectsChanged += view_PropertyGridValueChanged;
 
 		
 			var circleBrush = new SceneObject("Circle", 0, 0, 100, 100);
@@ -106,11 +106,17 @@ namespace RainEngine
 			{
 				scenabimgs[i]=emptyImage;
 			}
-
+			
 			this.view.UpdateScenabsData(scenabs, scenabimgs);
 			mouseInteraction = interactions[0];
+
+			this.view.SceneBox.Scene = model;
 		}
 
+		private void view_PropertyGridValueChanged(object sender, EventArgs e)
+		{
+			Overlay.SelectedObject = view.PropertyGrid.SelectedObject as SceneObject;
+		}
 		private void view_MouseDownEvent(object sender, EditorEventArgs e)
 		{
 			firstPos.X = e.X;
@@ -121,14 +127,12 @@ namespace RainEngine
 			{
 				if (mouseInteraction is DefaultInter)
 				{
-					view.ClearGraphics();
-					model.UpdateGraphicsFromScene(e.Graph, colourPen);
+					view.SceneBox.Refresh();
 					Func<SceneObject, bool> condition = (sceneobject) => (firstPos.X > sceneobject.X && firstPos.X < (sceneobject.X + sceneobject.ScaleX))
 					&& (firstPos.Y > sceneobject.Y && firstPos.Y < (sceneobject.Y + sceneobject.ScaleY));
 					SceneObject obj = model.GetObjectsQuery(condition).LastOrDefault();
 					if (obj != null)
 					{
-						DrawGreenSquare(obj,e.Graph);
 						view.PropertyGrid.SelectedObject = obj;
 					}
 					else
@@ -149,13 +153,14 @@ namespace RainEngine
 				cloned.Name = GetUnicalName(cloned.Name);
 
 				model.AddNewObject(cloned);
+				Overlay.DrawingObject = null;
 			}
 			else
 			{
 				mouseInteraction = interactions[0];
 			}
 
-			model.UpdateGraphicsFromScene(e.Graph, colourPen);
+			view.SceneBox.Refresh();
 			view.UpdateSceneObjectsData(model.SceneObjects);
 		}
 
@@ -239,24 +244,26 @@ namespace RainEngine
 		}
 		private void view_PressedMouseMoveEvent(object sender, EditorEventArgs e)
 		{
+			view.SceneBox.Refresh();
 			currentPos.X = e.X;
 			currentPos.Y = e.Y;
-			view.ClearGraphics();
 			mouseInteraction.Interact(view, new Point(e.X, e.Y), e.SceneObject, firstPos);
+
 			if(mouseInteraction is CreateObjInter)
 			{
-				e.SceneObject.GetComponent<Drawer>().Draw(e.Graph, colourPen);
+				Overlay.DrawingObject = e.SceneObject;
 			}
+			
 			if (e.SceneObject != null)
 			{
-				DrawGreenSquare(e.SceneObject, e.Graph);
+				Overlay.SelectedObject = e.SceneObject;
 			}
-			model.UpdateGraphicsFromScene(e.Graph, colourPen);
 		}
 		private void view_ClearClick(object sender, EditorEventArgs e)
 		{
 			model.ClearObjects();
-			view.ClearGraphics();
+			view.PropertyGrid.SelectedObject = null;
+			view.SceneBox.Refresh();
 			view.UpdateSceneObjectsData(model.SceneObjects);
 		}
 		private void view_SaveToXMLClick(object sender, EventArgs e)
@@ -275,25 +282,15 @@ namespace RainEngine
 
 			string filename = view.OpenFileDialog.FileName;
 			model.ClearObjects();
-			view.ClearGraphics();
 			model.LoadXmlFile(filename);
-			model.UpdateGraphicsFromScene(e.Graph, colourPen);
-			view.UpdateSceneObjectsData(model.SceneObjects);
+			view.SceneBox.Refresh();
 		}
 
 		private void view_ListBoxSelectedIndexChanged(object sender, SceneObjectListEventArgs e)
 		{
-			view.ClearGraphics();
-			model.UpdateGraphicsFromScene(e.Graph, colourPen);
+			view.SceneBox.Refresh();
 			SceneObject obj = model.GetSceneObject(e.Item);
 			view.PropertyGrid.SelectedObject = obj;
-			e.Graph.DrawPolygon(new Pen(Color.Green), new Point[]
-				{
-							new Point(obj.X,obj.Y),
-							new Point(obj.X+obj.ScaleX,obj.Y),
-							new Point(obj.X+obj.ScaleX,obj.Y+obj.ScaleY),
-							new Point(obj.X,obj.Y+obj.ScaleY)
-			});
 		}
 		private void view_ListViewSelectedIndexChanged(object sender, SceneObjectListEventArgs e)
 		{
@@ -311,19 +308,8 @@ namespace RainEngine
 		}
 		private void view_PropertyValueChanged(object sender, EditorEventArgs e)
 		{
-			view.ClearGraphics();
-			model.UpdateGraphicsFromScene(e.Graph, colourPen);
+			view.SceneBox.Refresh();
 			view.UpdateSceneObjectsData(model.SceneObjects);
-		}
-		private void DrawGreenSquare(SceneObject obj, Graphics graph)
-		{
-			graph.DrawPolygon(new Pen(Color.Green), new Point[]
-						{
-							new Point(obj.X,obj.Y),
-							new Point(obj.X+obj.ScaleX,obj.Y),
-							new Point(obj.X+obj.ScaleX,obj.Y+obj.ScaleY),
-							new Point(obj.X,obj.Y+obj.ScaleY)
-						});
 		}
 
 		private void view_OpenProjectClick(object sender, EventArgs e)
@@ -341,9 +327,9 @@ namespace RainEngine
 			if(view.PropertyGrid.SelectedObject != null)
 			{
 				model.SceneObjects.Remove((SceneObject)view.PropertyGrid.SelectedObject);
-				view.ClearGraphics();
-				model.UpdateGraphicsFromScene(e.Graph, colourPen);
+				view.SceneBox.Refresh();
 				view.UpdateSceneObjectsData(model.SceneObjects);
+				view.PropertyGrid.SelectedObject = null;
 			}
 		}
 
@@ -376,7 +362,14 @@ namespace RainEngine
 
 		private void OnAddComponentChoosed(Component choosedComponent, SceneObject target)
 		{
-			target.AttachComponent(choosedComponent);
+			try
+			{
+				target.AttachComponent(choosedComponent);
+			}
+			catch(ArgumentException e)
+			{
+				MessageBox.Show("Вы не можете добавить этот компонент, так как он уже установлен на этот объект");
+			}
 		}
 
 		private void OnDeleteComponentChoosed(Component choosedComponent, SceneObject target)

@@ -195,10 +195,17 @@ namespace RainEngine.BL.Abstract
 
 		public SceneObject AttachComponent(Component component)
 		{
-			component.Target = this;
-			components.Add(component.GetType(), component);
+			try
+			{
+				component.Target = this;
+				components.Add(component.GetType(), component);
 
-			return this;
+				return this;
+			}
+			catch(ArgumentException e)
+			{
+				throw e;
+			}
 		}
 
 		public T GetComponent<T>() where T : Component
@@ -208,7 +215,7 @@ namespace RainEngine.BL.Abstract
 				T component = components[typeof(T)] as T;
 				return component;
 			}
-			catch (IndexOutOfRangeException)
+			catch (KeyNotFoundException e)
 			{
 				return null;
 			}

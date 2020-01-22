@@ -29,6 +29,8 @@ namespace RainEngine
 
 		public TextBox SearchTextBox { get; set; }
 
+		public SceneBox SceneBox { get; set; }
+
 		public MainForm()
 		{
 			InitializeComponent();
@@ -37,6 +39,7 @@ namespace RainEngine
 			PropertyGrid = propertyGrid1;
 			ContextMenuStrip = contextMenuStrip1;
 			SearchTextBox = searchObjectsBox;
+			SceneBox = pictureBox1;
 			graph = pictureBox1.CreateGraphics();
 		}
 		
@@ -359,8 +362,7 @@ namespace RainEngine
 		}
 
 		private void MainForm_Paint(object sender, PaintEventArgs e)
-		{
-			MessageBox.Show("dsnvhdsbdsnjsddwjew");
+		{ 
 
 		}
 	}

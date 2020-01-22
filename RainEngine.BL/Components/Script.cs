@@ -38,7 +38,7 @@ namespace RainEngine.BL.Components
 
 		public override string ToString()
 		{
-			return Name;
+			return "Script";
 		}
 
 		public override string GetName()
