@@ -371,6 +371,7 @@ namespace RainEngine
 		private void view_ComponentDeleteClick(object sender, EventArgs e)
 		{
 			var form = new DeleteComponentForm(view.PropertyGrid.SelectedObject as SceneObject, OnDeleteComponentChoosed);
+			form.Show();
 		}
 
 		private void OnAddComponentChoosed(Component choosedComponent, SceneObject target)
@@ -380,7 +381,7 @@ namespace RainEngine
 
 		private void OnDeleteComponentChoosed(Component choosedComponent, SceneObject target)
 		{
-			target.RemoveComponentByType(choosedComponent);
+			target.RemoveComponentByTypeOf(choosedComponent);
 		}
 	}
 }

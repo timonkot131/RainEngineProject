@@ -218,7 +218,7 @@ namespace RainEngine.BL.Abstract
 		{
 			components.Remove(typeof(T));
 		}
-		public void RemoveComponentByType(Component component)
+		public void RemoveComponentByTypeOf(Component component)
 		{
 			components.Remove(component.GetType());
 		}

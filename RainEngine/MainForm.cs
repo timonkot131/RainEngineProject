@@ -353,5 +353,15 @@ namespace RainEngine
 		{
 			OnComponentDeleteClick(e);
 		}
+
+		private void PictureBox1_Paint(object sender, PaintEventArgs e)
+		{
+		}
+
+		private void MainForm_Paint(object sender, PaintEventArgs e)
+		{
+			MessageBox.Show("dsnvhdsbdsnjsddwjew");
+
+		}
 	}
 }

@@ -104,6 +104,7 @@
 			this.pictureBox1.Size = new System.Drawing.Size(630, 347);
 			this.pictureBox1.TabIndex = 0;
 			this.pictureBox1.TabStop = false;
+			this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox1_Paint);
 			this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form_MouseClick);
 			this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
 			this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
@@ -182,7 +183,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(3, -3);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(647, 118);
+			this.tabControl1.Size = new System.Drawing.Size(647, 119);
 			this.tabControl1.TabIndex = 2;
 			this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.TabControl1_Selecting);
 			// 
@@ -192,7 +193,7 @@
 			this.tabPage1.Location = new System.Drawing.Point(4, 22);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(639, 92);
+			this.tabPage1.Size = new System.Drawing.Size(639, 93);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "Объекты - кисти";
 			this.tabPage1.UseVisualStyleBackColor = true;
@@ -213,7 +214,7 @@
 			this.listView1.Margin = new System.Windows.Forms.Padding(2);
 			this.listView1.MultiSelect = false;
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(639, 90);
+			this.listView1.Size = new System.Drawing.Size(639, 91);
 			this.listView1.TabIndex = 1;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.SelectedIndexChanged += new System.EventHandler(this.ListView1_SelectedIndexChanged);
@@ -225,7 +226,7 @@
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(639, 92);
+			this.tabPage2.Size = new System.Drawing.Size(639, 93);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "Сценабы";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -245,7 +246,7 @@
 			this.tabPage3.Location = new System.Drawing.Point(4, 22);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage3.Size = new System.Drawing.Size(639, 92);
+			this.tabPage3.Size = new System.Drawing.Size(639, 93);
 			this.tabPage3.TabIndex = 2;
 			this.tabPage3.Text = "Сцены";
 			this.tabPage3.UseVisualStyleBackColor = true;
@@ -273,7 +274,7 @@
 			this.tabPage4.Location = new System.Drawing.Point(4, 22);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage4.Size = new System.Drawing.Size(639, 92);
+			this.tabPage4.Size = new System.Drawing.Size(639, 93);
 			this.tabPage4.TabIndex = 3;
 			this.tabPage4.Text = "Скрипты";
 			this.tabPage4.UseVisualStyleBackColor = true;
@@ -295,7 +296,7 @@
 			this.tabPage5.Location = new System.Drawing.Point(4, 22);
 			this.tabPage5.Name = "tabPage5";
 			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage5.Size = new System.Drawing.Size(639, 92);
+			this.tabPage5.Size = new System.Drawing.Size(639, 93);
 			this.tabPage5.TabIndex = 4;
 			this.tabPage5.Text = "Аудиофайлы";
 			this.tabPage5.UseVisualStyleBackColor = true;
@@ -526,6 +527,7 @@
 			this.Name = "MainForm";
 			this.Text = "Form1";
 			this.Shown += new System.EventHandler(this.MainForm_Shown);
+			this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);

@@ -30,7 +30,7 @@ namespace RainEngine
 
 			foreach(var componentType in componentTypes)
 			{
-				var component = Activator.CreateInstance(componentType);
+				var component =(BL.Abstract.Component) Activator.CreateInstance(componentType);
 				componentsBox.Items.Add(component);
 			}
 		}
